@@ -1,6 +1,13 @@
 // Testing getting JSON
 
-function movieSearchRequest(movieUrl) {
+var storeMovies;
+
+
+function getMovieJSON(movieURL) {
+    return movieSearchRequest.then(JSON.parse)
+}
+
+function requestMovieInfo(url){
     return new Promise (function(resolve, reject){
         var xhr = new XMLHttpRequest()
         xhr.addEventListener('load', function(event){
@@ -11,16 +18,17 @@ function movieSearchRequest(movieUrl) {
             }
         })
         xhr.addEventListener('error', reject)
-        xhr.open('GET', movieUrl)
+        xhr.open('GET', url)
         xhr.send()
     })
-
 }
-
-
-function getMovieJSON(movieURL) {
-    return movieSearchRequest.then(JSON.parse)
-}
-
 
 // Event listener for search button
+
+$('#searchButton').click(function(){
+    var searchQuery = $('#searchText').val()
+    console.log(searchQuery)
+    storeMovie = requestMovieInfo('http://www.omdbapi.com/?s=' + searchQuery)
+        .then(storeMovies = JSON.parse)
+    // storeMovie = getMovieJSON(movieSearchRequest('http://www.omdbapi.com/?s=' + searchQuery))
+})
