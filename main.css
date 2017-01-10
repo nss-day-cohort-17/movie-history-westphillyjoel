@@ -1,4 +1,6 @@
-.wider {
-  margin-left: 3px;
-  border: ;
+
+.search-group {
+    width: 30%;
+    display: flex;
+    margin-bottom: 3em;
 }
