@@ -1,6 +1,8 @@
 // buttons or links
 let movieSearchLink = $("#search-your-movies");
 let findMoviesLink = $("#find-new-movies");
+let userMoviesView = $("#userMovies")
+let newMoviesView = $("#searchNewMovies")
 
 // divs to hide or show
 
@@ -8,14 +10,29 @@ let findMoviesLink = $("#find-new-movies");
 ///////////////////////////
 ///   Event Listeners   ///
 ///////////////////////////
+
+// when 'search your movies' is clicked show the users movie views
 movieSearchLink.click(function(event) {
     console.log('clicked id=movieSearchLink')
     event.preventDefault();
-    findMoviesLink.addClass("hidden");
 
-    movieSearchLink.addClass("visible");
-    movieSearchLink.removeClass("hidden");
+    newMoviesView.addClass("hidden");
+    newMoviesView.removeClass('show');
+
+    userMoviesView.addClass("show");
+    userMoviesView.removeClass("hidden");
 });
+
+findMoviesLink.click(function(event) {
+    console.log('clicked id=findMoviesLink');
+    event.preventDefault();
+
+    userMoviesView.addClass('hidden');
+    userMoviesView.removeClass('show');
+
+    newMoviesView.addClass('show');
+    newMoviesView.removeClass('hidden');
+})
 
 
 /*---------------------*/
