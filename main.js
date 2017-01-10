@@ -1,28 +1,18 @@
 // buttons or links
-let addLink = $("#link-add");
-let addView = $("#add-view");
-let addSongButton = $('#addSong');
+let movieSearchLink = $("#search-your-movies");
+let findMoviesLink = $("#find-new-movies");
 
-var listLink = $("#link-list");
-var listView = $("#list-view");
+// divs to hide or show
 
 
 ///////////////////////////
 ///   Event Listeners   ///
 ///////////////////////////
-listLink.click(function(event) {
+movieSearchLink.click(function(event) {
+    console.log('clicked id=movieSearchLink')
     event.preventDefault();
-    addView.addClass("hidden");
+    findMoviesLink.addClass("hidden");
 
-    listView.addClass("visible");
-    listView.removeClass("hidden");
-});
-
-
-// Change sections
-addLink.click(function() {
-    //console.log('this was clicked')
-    listView.addClass("hidden");
-    addView.addClass("visible");
-    addView.removeClass("hidden");
+    movieSearchLink.addClass("visible");
+    movieSearchLink.removeClass("hidden");
 });
