@@ -102,11 +102,47 @@ $('#searchMovies--button').click(function(event){
 $("#watchedTab").click(function(event){
   console.log("Watched Tab Button Clicked")
 
+  let watchedMoviePromise = new Promise(function(resolve, reject){
 
+    var request = new XMLHttpRequest()
+    request.addEventListener('load', function(event){
+            if (event.target.status < 400) {
+                resolve(JSON.parse(event.target.responseText))
+            } else {
+                reject(event.target.status)
+              }
+    })
+    request.addEventListener('error', reject)
+    request.open('GET', 'https://west-philly-joel-movie-history.firebaseio.com/watchedMoviesList.json')
+    request.send()
+  })
 
-
-
+  watchedMoviePromise.then(function(watchedMoviesList){
+    console.log(watchedMoviesList)
+    showWatchedMovies(watchedMoviesList)
+  })
 })
+
+
+
+
+function requestMovieInfo(url){
+  return new Promise (function(resolve, reject){
+      var xhr = new XMLHttpRequest()
+      xhr.addEventListener('load', function(event){
+          if (event.target.status < 400) {
+              resolve(JSON.parse(event.target.responseText))
+          } else {
+              reject(event.target.status)
+          }
+      })
+      xhr.addEventListener('error', reject)
+      xhr.open('GET', url)
+      xhr.send()
+  })
+}
+
+
 
 
 
@@ -186,9 +222,47 @@ function addNewToMovieWatchList(){
 
 // show YOUR Watched movies
 
-function showWatchedMovies(){
-  // grab watched movies Tab
+function showWatchedMovies(watchedMovies){
+  console.log("showWatchedMovies function called")
+  console.log("watchedMovies", watchedMovies)
+  //loop over watched movies
+  for(var i = 0; i < watchedMovies.length; i++){
+    console.log("current movie", watchedMovies[i])
+    // grab div that will show Watched movies
+    $('.watchedMoviesDiv').append(`  <div class="col-md-4">
 
+                                      <!--Card-->
+                                      <div class="card card-cascade narrower">
+
+                                      <!--Card image-->
+                                      <div class="view overlay hm-white-slight">
+                                        <img src="${watchedMovies[i].Poster}" class="img-fluid" alt="">
+                                        <a>
+                                            <div class="mask"></div>
+                                        </a>
+                                      </div>
+                                      <!--/.Card image-->
+
+                                      <!--Card content-->
+                                      <div class="card-block">
+                                        <!--Title-->
+                                        <h4 class="card-title">${watchedMovies[i].Title}</h4>
+                                        <!--Year-->
+                                        <p class="card-text">${watchedMovies[i].Year}</p>
+                                        <!--Actors-->
+                                        <p>Working on this</p>
+                                        <!-- Add description? -->
+                                      </div>
+                                        <!--/.Card content-->
+
+                                      </div>
+                                        <!--/.Card-->
+                                        <div id="to-watch">
+                                        <a href="">Add to watch list</a>
+                                      </div>
+
+                                    </div>`)
+  }
 }
 
 
