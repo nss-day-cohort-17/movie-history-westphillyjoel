@@ -153,12 +153,24 @@
     </div>
   </div>
 
+  <!-- +++++++++++++++++++ -->
+  <!-- Find New Movies Div -->
+  <!-- +++++++++++++++++++ -->
   <div id="searchNewMovies" class="hidden">
     <div class="search-group">
-      <input type="text" class="form-control" placeholder="Find New Movies">
-      <button type="submit" class="btn btn-default">Submit</button>
+      <!-- Find New Movies Input Field -->
+      <input id="searchMovies--input-field" type="text" class="form-control" placeholder="Find New Movies">
+      <!-- Find New Movies Submit Button -->
+      <button id="searchMovies--button" type="submit" class="btn btn-default">Submit</button>
     </div>
-  </div>
+
+    <!-- Div that stores new searched movies -->
+    <div class="row">
+      <div class="foundMovies">
+        <!-- New Searched Movies will appear here -->
+      </div>
+    </div>
+  </div> <!-- Closes Find New Movies Div -->
 
 
   <script src="/bower_components/jquery/dist/jquery.js"></script>

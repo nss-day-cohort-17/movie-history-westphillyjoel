@@ -68,6 +68,7 @@ function requestMovieInfo(url){
 // Event listener for search button
 
 $('#searchMovies--button').click(function(event){
+    console.log("Search for Movies Button Clicked")
     event.preventDefault()
 
     var searchQuery = $('#searchMovies--input-field').val()
@@ -88,6 +89,9 @@ $('#searchMovies--button').click(function(event){
 function addNewSearchedMovies(moviesList){
     console.log("addNewSearchedMovies function called")
 
+    // Clear Movie Div
+    $('.foundMovies').empty()
+
     var movieArray = moviesList;
     console.log(movieArray)
 
@@ -99,6 +103,40 @@ function addNewSearchedMovies(moviesList){
         console.log(movieArray[i])
         console.log(movieArray[i].Title)
 
+        // Grab Div to store Searched Movies
+        $('.foundMovies').append(`  <div class="col-md-4">
+
+                                      <!--Card-->
+                                      <div class="card card-cascade narrower">
+
+                                      <!--Card image-->
+                                      <div class="view overlay hm-white-slight">
+                                        <img src="${movieArray[i].Poster}" class="img-fluid" alt="">
+                                        <a>
+                                            <div class="mask"></div>
+                                        </a>
+                                      </div>
+                                      <!--/.Card image-->
+
+                                      <!--Card content-->
+                                      <div class="card-block">
+                                        <!--Title-->
+                                        <h4 class="card-title">${movieArray[i].Title}</h4>
+                                        <!--Year-->
+                                        <p class="card-text">${movieArray[i].Year}</p>
+                                        <!--Actors-->
+                                        <p>Working on this</p>
+                                        <!-- Add description? -->
+                                      </div>
+                                        <!--/.Card content-->
+
+                                      </div>
+                                        <!--/.Card-->
+                                        <div id="to-watch">
+                                        <a href="">Add to watch list</a>
+                                      </div>
+
+                                    </div>`)
 
     }
 }
