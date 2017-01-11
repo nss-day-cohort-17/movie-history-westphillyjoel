@@ -1,3 +1,5 @@
+console.log("main.js loaded")
+
 // buttons or links from navbar
 let movieSearchLink = $("#search-your-movies");
 let findMoviesLink = $("#find-new-movies");
