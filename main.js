@@ -147,3 +147,22 @@ function addNewSearchedMovies(moviesList){
 
     }
 }
+
+
+
+// Add searched movies to a will watch list on firebase
+
+function addNewToMovieWatchList(){
+
+  // grab add to watch list div
+  $('to-watch').click(
+    function(event){}
+}
+
+
+
+// show YOUR movies
+
+function showYourMovies(){
+
+}
