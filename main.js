@@ -72,6 +72,11 @@ function requestMovieInfo(url){
     })
 }
 
+
+/***************************************/
+/******  EVENT LISTENERS      **********/
+/***************************************/
+
 // Event listener for search button
 
 $('#searchMovies--button').click(function(event){
@@ -91,6 +96,24 @@ $('#searchMovies--button').click(function(event){
     // storeMovie = getMovieJSON(movieSearchRequest('http://www.omdbapi.com/?s=' + searchQuery))
     // addNewSearchedMovies(storedSearchedMovies)
 })
+
+
+// Event Listener for watchedMoviesTab
+$("#watchedTab").click(function(event){
+  console.log("Watched Tab Button Clicked")
+
+
+
+
+
+})
+
+
+
+
+/****************************************/
+/******   FUNCTIONS       ***************/
+/****************************************/
 
 
 function addNewSearchedMovies(moviesList){
@@ -155,14 +178,22 @@ function addNewSearchedMovies(moviesList){
 function addNewToMovieWatchList(){
 
   // grab add to watch list div
-  $('to-watch').click(
-    function(event){}
+  // $('to-watch').click(
+  //   function(event){}
 }
 
 
 
-// show YOUR movies
+// show YOUR Watched movies
 
-function showYourMovies(){
+function showWatchedMovies(){
+  // grab watched movies Tab
+
+}
+
+
+// show YOUR UNwatched movies
+
+function showMoviesNotWatched(){
 
 }
