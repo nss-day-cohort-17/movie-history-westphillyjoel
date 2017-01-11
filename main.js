@@ -26,11 +26,8 @@ movieSearchLink.click(function(event) {
     findMoviesLink.removeClass('active');
     movieSearchLink.addClass('active');
 
-    newMoviesView.addClass("hidden");
-    newMoviesView.removeClass('show');
-
-    userMoviesView.addClass("show");
-    userMoviesView.removeClass("hidden");
+    newMoviesView.addClass("hidden").removeClass('show');
+    userMoviesView.addClass("show").removeClass("hidden");
 });
 
 // when 'find new movies' link is clicked show the search bar in new movies div
@@ -40,11 +37,8 @@ findMoviesLink.click(function(event) {
     movieSearchLink.removeClass('active');
     findMoviesLink.addClass('active');
 
-    userMoviesView.addClass('hidden');
-    userMoviesView.removeClass('show');
-
-    newMoviesView.addClass('show');
-    newMoviesView.removeClass('hidden');
+    userMoviesView.addClass('hidden').removeClass('show');
+    newMoviesView.addClass('show').removeClass('hidden');
 })
 
 // when 'show watched' tab is clicked show the users watched movies and hide unwatched movies
@@ -54,11 +48,8 @@ watchedMoviesTab.click(function(event) {
     watchedMoviesTab.addClass('activeWatch');
     unwatchedMoviesTab.removeClass('activeWatch');
 
-    watchedMoviesDiv.addClass('show');
-    watchedMoviesDiv.removeClass('hidden');
-
-    unwatchedMoviesDiv.addClass('hidden');
-    unwatchedMoviesDiv.removeClass('show');
+    watchedMoviesDiv.addClass('show').removeClass('hidden');
+    unwatchedMoviesDiv.addClass('hidden').removeClass('show');
 })
 
 // when 'show unwatched' tab is clicked show the users unwatched movies and hide users watched movies
@@ -68,11 +59,8 @@ unwatchedMoviesTab.click(function(event) {
     watchedMoviesTab.removeClass('activeWatch');
     unwatchedMoviesTab.addClass('activeWatch');
 
-    watchedMoviesDiv.addClass('hidden');
-    watchedMoviesDiv.removeClass('show');
-
-    unwatchedMoviesDiv.addClass('show');
-    unwatchedMoviesDiv.removeClass('hidden');
+    watchedMoviesDiv.addClass('hidden').removeClass('show');
+    unwatchedMoviesDiv.addClass('show').removeClass('hidden');
 })
 
 
@@ -204,7 +192,7 @@ function addNewSearchedMovies(moviesList){
         console.log(movieArray[i].Title)
 
         // Grab Div to store Searched Movies
-        $('.foundMovies').append(`  <div class="col-md-4">
+        $('.foundMovies').append(`  <div class="col-sm-4">
 
                                       <!--Card-->
                                       <div class="card card-cascade narrower">
@@ -267,7 +255,7 @@ function showWatchedMovies(watchedMovies){
   for(var i = 0; i < watchedMovies.length; i++){
     console.log("current movie", watchedMovies[i])
     // grab div that will show Watched movies
-    $('.watchedMoviesDiv').append(`  <div class="col-md-4">
+    $('.watchedMoviesDiv').append(`  <div class="col-sm-4">
 
                                       <!--Card-->
                                       <div class="card card-cascade narrower">
@@ -308,4 +296,54 @@ function showWatchedMovies(watchedMovies){
 
 function showMoviesNotWatched(){
 
+}
+
+///////////////////////////////
+////    Stars Ratings     /////
+///////////////////////////////
+$(document).ready(function(){
+
+  /* 1. Visualizing things on Hover - See next part for action on click */
+  $('#stars li').on('mouseover', function(){
+    var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
+
+    // Now highlight all the stars that's not after the current hovered star
+    $(this).parent().children('li.star').each(function(e){
+      if (e < onStar) {
+        $(this).addClass('hover');
+      }
+      else {
+        $(this).removeClass('hover');
+      }
+    });
+
+  }).on('mouseout', function(){
+    $(this).parent().children('li.star').each(function(e){
+      $(this).removeClass('hover');
+    });
+  });
+
+
+  /* 2. Action to perform on click */
+  $('#stars li').on('click', function(){
+    var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+    var stars = $(this).parent().children('li.star');
+
+    for (i = 0; i < stars.length; i++) {
+      $(stars[i]).removeClass('selected');
+    }
+
+    for (i = 0; i < onStar; i++) {
+      $(stars[i]).addClass('selected');
+    }
+
+  });
+
+
+});
+
+
+function responseMessage(msg) {
+  $('.success-box').fadeIn(200);
+  $('.success-box div.text-message').html("<span>" + msg + "</span>");
 }
