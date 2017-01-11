@@ -146,16 +146,58 @@ watchedMoviesTab.click(function(event){
 })
 
 
+// Event Listener for unwatched Movies tab
+unwatchedMoviesTab.click(function(event){
+  console.log("Unwatched Tab Button Clicked")
+
+  let unwatchedMoviePromise = new Promise(function(resolve, reject){
+
+    var request = new XMLHttpRequest()
+    request.addEventListener('load', function(event){
+            if (event.target.status < 400) {
+                resolve(JSON.parse(event.target.responseText))
+            } else {
+                reject(event.target.status)
+              }
+    })
+    request.addEventListener('error', reject)
+    request.open('GET', 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList.json')
+    request.send()
+  })
+
+  unwatchedMoviePromise.then(function(unwatchedMoviesList){
+    console.log(unwatchedMoviesList)
+    addUnwatchedMoviesToPage(unwatchedMoviesList)
+  })
+})
+
+
+
 // Event listener to add movies to will watch list
 $('body').on("click", '#to-watch', function(event){
   console.log('to-watch link clicked')
+  //console.log("test", event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText)
 
+  var target = $('event.target') // JQUERY SUCKS
+
+  var movieTitle = event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText
+  var movieYear = event.target.parentElement.parentElement.getElementsByClassName('card-text')[0].innerText
+  console.log(movieTitle)
+  console.log(movieYear)
   //event.preventDefault();
 
   // get selected movies info
-  requestMovieInfo('http://www.omdbapi.com/?s=')
+  var selectedMoviePromise = requestMovieInfo('http://www.omdbapi.com/?t=' + movieTitle + "&y=" + movieYear)
 
-  //add movie info to firebase database
+  selectedMoviePromise.then(function(movie){
+    console.log(movie)
+
+    // send movie to the unwatched list
+    //add movie info to firebase database
+    var request = new XMLHttpRequest()
+    request.open('POST', 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList.json')
+    request.send(JSON.stringify(movie))
+  })
 
 })
 
@@ -261,7 +303,7 @@ function addNewToMovieWatchList(){
 // show YOUR Watched movies
 
 function addWatchedMoviesToPage(watchedMovies){
-  console.log("showWatchedMovies function called")
+  console.log("addWatchedMoviesToPage function called")
   console.log("watchedMovies", watchedMovies)
 
   // clear watched movies div
@@ -319,8 +361,53 @@ function addWatchedMoviesToPage(watchedMovies){
 
 // show YOUR UNwatched movies
 
-function showMoviesNotWatched(){
+function addUnwatchedMoviesToPage(unwatchedMovies){
+  console.log("addUnwatchedMoviesToPage function called")
+  console.log("unwatchedMovies", unwatchedMovies)
+  console.log("unwatchedMovies length", unwatchedMovies.length)
+  // clear watched movies div
+  $('#userUnwatchedMovies').empty()
 
+  //loop over watched movies
+  // for(var i = 0; i < Object.keys(unwatchedMovies).length; i++){
+  for (key in unwatchedMovies){
+    console.log("current movie", unwatchedMovies[key])
+    // grab div that will show Watched movies
+
+    $('#userUnwatchedMovies').append(`  <div class="col-sm-4">
+
+                                      <!--Card-->
+                                      <div class="card card-cascade narrower">
+
+                                      <!--Card image-->
+                                      <div class="view overlay hm-white-slight">
+                                        <img src="${unwatchedMovies[key].Poster}" class="img-fluid" alt="">
+                                        <a>
+                                            <div class="mask"></div>
+                                        </a>
+                                      </div>
+                                      <!--/.Card image-->
+
+                                      <!--Card content-->
+                                      <div class="card-block">
+                                        <!--Title-->
+                                        <h4 class="card-title">${unwatchedMovies[key].Title}</h4>
+                                        <!--Year-->
+                                        <p class="card-text">${unwatchedMovies[key].Year}</p>
+                                        <!--Actors-->
+                                        <p>Working on this</p>
+                                        <!-- Add description? -->
+                                      </div>
+                                        <!--/.Card content-->
+
+                                      </div>
+                                        <!--/.Card-->
+                                        <div id="to-watch">
+                                        <a href="">Add to watch list</a>
+                                      </div>
+
+                                    </div>`)
+  }
 }
 
 ///////////////////////////////
