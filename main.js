@@ -1,13 +1,18 @@
-// buttons or links
+// buttons or links from navbar
 let movieSearchLink = $("#search-your-movies");
 let findMoviesLink = $("#find-new-movies");
-let unwatchedMoviesTab = $("#unwatchedTab");
-let watchedMoviesTab = $("#watchedTab")
-
 
 // divs to hide or show
 let userMoviesView = $("#userMovies");
-let newMoviesView = $("#searchNewMovies");
+let newMoviesView = $("#findNewMovies");
+
+// links from watch or unwatched movies tab selection
+let unwatchedMoviesTab = $("#unwatchedTab");
+let watchedMoviesTab = $("#watchedTab")
+
+// div to hide or show watched or unwatched users movies
+let watchedMoviesDiv = $("#userWatchedMovies");
+let unwatchedMoviesDiv = $("#userUnwatchedMovies");
 
 
 ///////////////////////////
@@ -28,6 +33,7 @@ movieSearchLink.click(function(event) {
     userMoviesView.removeClass("hidden");
 });
 
+// when 'find new movies' link is clicked show the search bar in new movies div
 findMoviesLink.click(function(event) {
     event.preventDefault();
 
@@ -39,6 +45,34 @@ findMoviesLink.click(function(event) {
 
     newMoviesView.addClass('show');
     newMoviesView.removeClass('hidden');
+})
+
+// when 'show watched' tab is clicked show the users watched movies and hide unwatched movies
+watchedMoviesTab.click(function(event) {
+    event.preventDefault();
+
+    watchedMoviesTab.addClass('activeWatch');
+    unwatchedMoviesTab.removeClass('activeWatch');
+
+    watchedMoviesDiv.addClass('show');
+    watchedMoviesDiv.removeClass('hidden');
+
+    unwatchedMoviesDiv.addClass('hidden');
+    unwatchedMoviesDiv.removeClass('show');
+})
+
+// when 'show unwatched' tab is clicked show the users unwatched movies and hide users watched movies
+unwatchedMoviesTab.click(function(event) {
+    event.preventDefault();
+
+    watchedMoviesTab.removeClass('activeWatch');
+    unwatchedMoviesTab.addClass('activeWatch');
+
+    watchedMoviesDiv.addClass('hidden');
+    watchedMoviesDiv.removeClass('show');
+
+    unwatchedMoviesDiv.addClass('show');
+    unwatchedMoviesDiv.removeClass('hidden');
 })
 
 

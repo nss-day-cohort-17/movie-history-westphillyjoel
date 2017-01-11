@@ -41,17 +41,22 @@ img {
   margin-left: 5px;
 }
 
-#watchedUnwatched {
+#watchedUnwatchedSelection {
   display: inline-flex;
   text-decoration: none;
   list-style: none;
   margin-bottom: 2em;
   min-width: 350px;
 }
-#watchedUnwatched a {
+#watchedUnwatchedSelection a {
   /*margin-right: 3em;*/
   width: 10%;
   color: black;
   border: 1px solid black;
   padding: 0.2em 2em;
+}
+
+.activeWatch {
+  text-decoration: underline;
+  background-color: #8DEA91;
 }
