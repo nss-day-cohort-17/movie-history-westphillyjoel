@@ -225,6 +225,10 @@ function addNewToMovieWatchList(){
 function showWatchedMovies(watchedMovies){
   console.log("showWatchedMovies function called")
   console.log("watchedMovies", watchedMovies)
+
+  // clear watched movies div
+  $('.watchedMoviesDiv').empty()
+
   //loop over watched movies
   for(var i = 0; i < watchedMovies.length; i++){
     console.log("current movie", watchedMovies[i])
