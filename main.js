@@ -121,6 +121,22 @@ $('#searchMovies--button').click(function(event){
     // addNewSearchedMovies(storedSearchedMovies)
 })
 
+// Event listener on search field
+$('#searchMovies--input-field').on('keydown', function(event){
+  if (event.keyCode === 13) {  //checks whether the pressed key is "Enter"
+    var searchQuery = $('#searchMovies--input-field').val()
+    console.log(searchQuery)
+
+    // Promise for searching for new movies
+    storeSearchedMoviesPromise = requestMovieInfo('http://www.omdbapi.com/?s=' + searchQuery)
+        .then(function(movieValue){
+            storedSearchedMovies = movieValue;
+
+            addNewSearchedMovies(storedSearchedMovies)
+        })
+  }
+})
+
 
 // Event Listener for watchedMoviesTab
 watchedMoviesTab.click(function(event){
@@ -176,8 +192,8 @@ unwatchedMoviesTab.click(function(event){
 
 
 // Event listener to add movies to will watch list
-$('body').on("click", '#to-watch', function(event){
-  console.log('to-watch link clicked')
+$('body').on("click", '#add-movie-to-unwatched-list', function(event){
+  console.log('add movie to unwatched list link clicked')
   //console.log("test", event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText)
 
   var target = $('event.target') // JQUERY SUCKS
@@ -203,23 +219,34 @@ $('body').on("click", '#to-watch', function(event){
 
 })
 
-// function requestMovieInfo(url){
-//   return new Promise (function(resolve, reject){
-//       var xhr = new XMLHttpRequest()
-//       xhr.addEventListener('load', function(event){
-//           if (event.target.status < 400) {
-//               resolve(JSON.parse(event.target.responseText))
-//           } else {
-//               reject(event.target.status)
-//           }
-//       })
-//       xhr.addEventListener('error', reject)
-//       xhr.open('GET', url)
-//       xhr.send()
-//   })
-// }
 
+// Event listener to add movies to the watched list
+$('body').on("click", '#add-to-watched-movies-link', function(event){
+  console.log('add-movie-to-watched-movies-link clicked')
+  //console.log("test", event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText)
 
+  var target = $('event.target') // JQUERY SUCKS
+
+  var movieTitle = event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText
+  var movieYear = event.target.parentElement.parentElement.getElementsByClassName('card-text')[0].innerText
+  console.log(movieTitle)
+  console.log(movieYear)
+  //event.preventDefault();
+
+  // get selected movies info
+  var selectedMoviePromise = requestMovieInfo('http://www.omdbapi.com/?t=' + movieTitle + "&y=" + movieYear)
+
+  selectedMoviePromise.then(function(movie){
+    console.log(movie)
+
+    // send movie to the watched list
+    //add movie info to firebase database
+    var request = new XMLHttpRequest()
+    request.open('POST', 'https://west-philly-joel-movie-history.firebaseio.com/watchedMoviesList.json')
+    request.send(JSON.stringify(movie))
+  })
+
+})
 
 /****************************************/
 /******   FUNCTIONS       ***************/
@@ -275,9 +302,8 @@ function addNewSearchedMovies(moviesList){
 
                                       </div><!--/.Card-->
 
-                                      <div id="to-watch">
-                                        <a href="#">Add to watch list</a>
-                                        //<button class="addMovieToWatchListButton">Add to watch list</button>
+                                      <div id="add-movie-to-unwatched-list">
+                                        <a href="#">Add movie to your unwatched list</a>
                                       </div>
 
                                     </div>`);
@@ -311,11 +337,15 @@ function addWatchedMoviesToPage(watchedMovies){
   // clear watched movies div
   $('#userWatchedMovies').empty()
 
+  // store current iteration over objects
+  var i = 0;
+  //var objectSize = Object.keys(watchedMovies).length; // don't need this
+
   //loop over watched movies
-  for(var i = 0; i < watchedMovies.length; i++){
-    console.log("current movie", watchedMovies[i])
+  for(key in watchedMovies){
+    console.log("current movie", watchedMovies[key])
     // grab div that will show Watched movies
-    if (i%3 === 0) {
+    if (i % 3 === 0) {
         $('#userWatchedMovies').append(`<div class="row">`)
     }
     $('#userWatchedMovies').append(`  <div class="col-sm-4">
@@ -325,7 +355,7 @@ function addWatchedMoviesToPage(watchedMovies){
 
                                       <!--Card image-->
                                       <div class="view overlay hm-white-slight">
-                                        <img src="${watchedMovies[i].Poster}" class="img-fluid" alt="">
+                                        <img src="${watchedMovies[key].Poster}" class="img-fluid" alt="">
                                         <a>
                                             <div class="mask"></div>
                                         </a>
@@ -335,9 +365,9 @@ function addWatchedMoviesToPage(watchedMovies){
                                       <!--Card content-->
                                       <div class="card-block">
                                         <!--Title-->
-                                        <h4 class="card-title">${watchedMovies[i].Title}</h4>
+                                        <h4 class="card-title">${watchedMovies[key].Title}</h4>
                                         <!--Year-->
-                                        <p class="card-text">${watchedMovies[i].Year}</p>
+                                        <p class="card-text">${watchedMovies[key].Year}</p>
                                         <!--Actors-->
                                         <p>Working on this</p>
                                         <!-- Add description? -->
@@ -346,8 +376,8 @@ function addWatchedMoviesToPage(watchedMovies){
 
                                       </div>
                                         <!--/.Card-->
-                                        <div id="to-watch">
-                                        <a href="">Add to watch list</a>
+                                        <div id="watched-movie">
+                                        <a href="#">What do I do here?</a>
                                       </div>
 
                                     </div>`);
@@ -357,7 +387,10 @@ function addWatchedMoviesToPage(watchedMovies){
     if (i === (watchedMovies.length - 1)) {
         $('#userWatchedMovies').append(`</div>`)
     }
+    i++
   }
+  // reset i
+  i = 0;
 }
 
 
@@ -404,8 +437,8 @@ function addUnwatchedMoviesToPage(unwatchedMovies){
 
                                       </div>
                                         <!--/.Card-->
-                                        <div id="to-watch">
-                                        <a href="">Add to watch list</a>
+                                        <div id="add-to-watched-movies-link">
+                                        <a href="#">Add movie to your watched list</a>
                                       </div>
 
                                     </div>`)
