@@ -1,8 +1,9 @@
 
 .search-group {
-    width: 30%;
+    width: 40%;
     display: flex;
     margin-bottom: 3em;
+    min-width: 250px
 }
 
 .hidden {
@@ -41,4 +42,24 @@ img {
 #watched {
   margin-top: 10px;
   margin-left: 5px;
+}
+
+#watchedUnwatchedSelection {
+  display: inline-flex;
+  text-decoration: none;
+  list-style: none;
+  margin-bottom: 2em;
+  min-width: 350px;
+}
+#watchedUnwatchedSelection a {
+  /*margin-right: 3em;*/
+  width: 10%;
+  color: black;
+  border: 1px solid black;
+  padding: 0.2em 2em;
+}
+
+.activeWatch {
+  text-decoration: underline;
+  background-color: #8DEA91;
 }
