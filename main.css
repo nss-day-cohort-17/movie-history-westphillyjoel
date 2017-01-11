@@ -14,4 +14,28 @@
 }
 img {
     width: 100%;
+    border-bottom: solid;
+    border-width: 1px;
+}
+
+.card {
+  border: solid;
+  webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+#rating {
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+#to-watch {
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+#watched {
+  margin-top: 10px;
+  margin-left: 5px;
 }
