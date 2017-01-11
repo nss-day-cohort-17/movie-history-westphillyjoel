@@ -133,7 +133,7 @@ $('#searchMovies--button').click(function(event){
 
 
 // Event Listener for watchedMoviesTab
-$("#watchedTab").click(function(event){
+watchedMoviesTab.click(function(event){
   console.log("Watched Tab Button Clicked")
 
   let watchedMoviePromise = new Promise(function(resolve, reject){
@@ -153,7 +153,7 @@ $("#watchedTab").click(function(event){
 
   watchedMoviePromise.then(function(watchedMoviesList){
     console.log(watchedMoviesList)
-    showWatchedMovies(watchedMoviesList)
+    addWatchedMoviesToPage(watchedMoviesList)
   })
 })
 
@@ -204,7 +204,7 @@ function addNewSearchedMovies(moviesList){
         console.log(movieArray[i].Title)
 
         // Grab Div to store Searched Movies
-        $('.foundMovies').append(`  <div class="col-md-4">
+        $('.foundMovies').append(`  <div class="col-sm-4">
 
                                       <!--Card-->
                                       <div class="card card-cascade narrower">
@@ -256,18 +256,18 @@ function addNewToMovieWatchList(){
 
 // show YOUR Watched movies
 
-function showWatchedMovies(watchedMovies){
+function addWatchedMoviesToPage(watchedMovies){
   console.log("showWatchedMovies function called")
   console.log("watchedMovies", watchedMovies)
 
   // clear watched movies div
-  $('.watchedMoviesDiv').empty()
+  $('#userWatchedMovies').empty()
 
   //loop over watched movies
   for(var i = 0; i < watchedMovies.length; i++){
     console.log("current movie", watchedMovies[i])
     // grab div that will show Watched movies
-    $('.watchedMoviesDiv').append(`  <div class="col-md-4">
+    $('#userWatchedMovies').append(`  <div class="col-sm-4">
 
                                       <!--Card-->
                                       <div class="card card-cascade narrower">
