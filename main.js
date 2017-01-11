@@ -149,11 +149,36 @@ watchedMoviesTab.click(function(event){
 // Event listener to add movies to will watch list
 $('body').on("click", '#to-watch', function(event){
   console.log('to-watch link clicked')
+  //console.log("test", event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText)
 
+  var target = $('event.target') // JQUERY SUCKS
+
+  var movieTitle = event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText
+  var movieYear = event.target.parentElement.parentElement.getElementsByClassName('card-text')[0].innerText
+  console.log(movieTitle)
+  console.log(movieYear)
   //event.preventDefault();
 
   // get selected movies info
-  requestMovieInfo('http://www.omdbapi.com/?s=')
+  var selectedMoviePromise = requestMovieInfo('http://www.omdbapi.com/?t=' + movieTitle + "&y=" + movieYear)
+
+  selectedMoviePromise.then(function(movie){
+    console.log(movie)
+
+    // send movie to the unwatched list
+    var request = new XMLHttpRequest()
+    request.addEventListener('load', function(event){
+            if (event.target.status < 400) {
+                resolve(JSON.parse(event.target.responseText))
+            } else {
+                console.log(event.target.status)
+                reject(event.target.status)
+              }
+    })
+    request.addEventListener('error', reject)
+    request.open('POST', 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList.json')
+    request.send()
+  })
 
   //add movie info to firebase database
 
