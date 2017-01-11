@@ -14,9 +14,7 @@
     display: flex;
 }
 img {
-    max-height: 300px;
-    max-width: 300px;
-    min-width: 354px;
+    width: 100%;
     border-bottom: 1px;
 }
 
@@ -25,8 +23,6 @@ img {
   webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-  min-height: 400px;
-  max-height: 400px;
 }
 
 #rating {

@@ -159,11 +159,6 @@ $('body').on("click", '#to-watch', function(event){
 
 })
 
-
-
-
-
-
 // function requestMovieInfo(url){
 //   return new Promise (function(resolve, reject){
 //       var xhr = new XMLHttpRequest()
@@ -179,9 +174,6 @@ $('body').on("click", '#to-watch', function(event){
 //       xhr.send()
 //   })
 // }
-
-
-
 
 
 
@@ -206,7 +198,9 @@ function addNewSearchedMovies(moviesList){
     for (var i = 0; i < movieArray.length; i++) {
         console.log(movieArray[i])
         console.log(movieArray[i].Title)
-
+        if (i%3 === 0) {
+            $('.foundMovies').append(`<div class="row">`)
+        }
         // Grab Div to store Searched Movies
         $('.foundMovies').append(`  <div class="col-sm-4">
 
@@ -242,8 +236,12 @@ function addNewSearchedMovies(moviesList){
                                         //<button class="addMovieToWatchListButton">Add to watch list</button>
                                       </div>
 
-                                    </div>`)
-
+                                    </div>`);
+        if (i%3 === 2) {
+            $('.foundMovies').append(`</div>`)
+        } else if (i === (movieArray.length - 1)) {
+            $('.foundMovies').append(`</div>`)
+        }
     }
 }
 
@@ -273,7 +271,9 @@ function addWatchedMoviesToPage(watchedMovies){
   for(var i = 0; i < watchedMovies.length; i++){
     console.log("current movie", watchedMovies[i])
     // grab div that will show Watched movies
-
+    if (i%3 === 0) {
+        $('#userWatchedMovies').append(`<div class="row">`)
+    }
     $('#userWatchedMovies').append(`  <div class="col-sm-4">
 
                                       <!--Card-->
@@ -306,7 +306,13 @@ function addWatchedMoviesToPage(watchedMovies){
                                         <a href="">Add to watch list</a>
                                       </div>
 
-                                    </div>`)
+                                    </div>`);
+    if (i%3 === 2) {
+        $('#userWatchedMovies').append(`</div>`)
+    }
+    if (i === (watchedMovies.length - 1)) {
+        $('#userWatchedMovies').append(`</div>`)
+    }
   }
 }
 
