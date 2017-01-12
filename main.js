@@ -25,46 +25,58 @@ let unwatchedMoviesDiv = $("#userUnwatchedMovies");
 
 // when 'search your movies' is clicked show the users movie views
 movieSearchLink.click(function(event) {
-    event.preventDefault();
+  event.preventDefault();
 
+  if (firebase.auth().currentUser !== null) {
+    //logged in
     findMoviesLink.removeClass('active');
     movieSearchLink.addClass('active');
 
     newMoviesView.addClass("hidden");
     userMoviesView.removeClass("hidden");
+  }
 });
 
 // when 'find new movies' link is clicked show the search bar in new movies div
 findMoviesLink.click(function(event) {
-    event.preventDefault();
+  event.preventDefault();
 
+  if (firebase.auth().currentUser !== null) {
+    //logged in
     movieSearchLink.removeClass('active');
     findMoviesLink.addClass('active');
 
     userMoviesView.addClass('hidden');
     newMoviesView.removeClass('hidden');
+  }
 })
 
 // when 'show watched' tab is clicked show the users watched movies and hide unwatched movies
 watchedMoviesTab.click(function(event) {
-    event.preventDefault();
+  event.preventDefault();
 
+  if (firebase.auth().currentUser !== null) {
+    //logged in
     watchedMoviesTab.addClass('activeWatch');
     unwatchedMoviesTab.removeClass('activeWatch');
 
     watchedMoviesDiv.removeClass('hidden');
     unwatchedMoviesDiv.addClass('hidden');
+  }
 })
 
 // when 'show unwatched' tab is clicked show the users unwatched movies and hide users watched movies
 unwatchedMoviesTab.click(function(event) {
-    event.preventDefault();
+  event.preventDefault();
 
+  if (firebase.auth().currentUser !== null) {
+    //logged in
     watchedMoviesTab.removeClass('activeWatch');
     unwatchedMoviesTab.addClass('activeWatch');
 
     watchedMoviesDiv.addClass('hidden');
     unwatchedMoviesDiv.removeClass('hidden');
+  }
 })
 
 
