@@ -265,7 +265,7 @@ function getFullMovieInfo(movieList){
     // do api call to get full information
     $.ajax({
       method: 'GET',
-      url: "'http://www.omdbapi.com/?t='"
+      url: `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
     })
   }
 
