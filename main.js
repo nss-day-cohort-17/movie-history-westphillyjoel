@@ -309,6 +309,7 @@ function addNewSearchedMovies(moviesList){
 
                                         <!--Card image-->
                                         <div class="view overlay hm-white-slight">
+                                          <a class='fa fa-trash-o fa-2x'></a>
                                           <img src="${movieArray[i].Poster}" class="img-fluid" alt="">
                                           <a>
                                           <div class="mask"></div>
@@ -372,6 +373,7 @@ function addWatchedMoviesToPage(watchedMovies){
 
                                       <!--Card image-->
                                       <div class="view overlay hm-white-slight">
+                                        <a class='fa fa-trash-o fa-2x'></a>
                                         <img src="${watchedMovies[key].Poster}" class="img-fluid" alt="">
                                         <a>
                                             <div class="mask"></div>
@@ -433,6 +435,7 @@ function addUnwatchedMoviesToPage(unwatchedMovies){
 
                                       <!--Card image-->
                                       <div class="view overlay hm-white-slight">
+                                        <a class='fa fa-trash-o fa-2x'></a>
                                         <img src="${unwatchedMovies[key].Poster}" class="img-fluid" alt="">
                                         <a>
                                             <div class="mask"></div>
