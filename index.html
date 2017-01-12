@@ -35,8 +35,6 @@
             <li id="find-new-movies"><a href="#">Find New Movies</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Register</a></li>
             <li><a href="#">Logout</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
@@ -47,7 +45,7 @@
     <!-- +++++++++ -->
     <div class="login-page">
       <form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">Please log in</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
         <label for="inputPassword" class="sr-only">Password</label>
@@ -65,7 +63,7 @@
 
     <!-- users Movies -->
     <!-- ************ -->
-    <div id="userMovies" class="show">
+    <div id="userMovies" class="hidden">
 
       <!-- search group for user movies -->
       <!-- ++++++++++++++++++++++++++++ -->
@@ -232,7 +230,6 @@
               </div>
           </div>
       </div>
-
     </div><!-- closing div for users movies -->
 
     <!-- Find New Movies Div -->
@@ -252,9 +249,11 @@
         </div>
       </div>
     </div> <!-- Closes Find New Movies Div -->
+
   </div><!-- closing div for container -->
 
 
+  <script src="/bower_components/firebase/firebase.js"></script>
   <script src="/bower_components/jquery/dist/jquery.js"></script>
   <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script src="main.js"></script>

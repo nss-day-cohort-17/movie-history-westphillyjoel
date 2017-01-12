@@ -1,5 +1,3 @@
-console.log("main.js loaded")
-
 ////////////////////////////////////////
 ///   Store Commonly Used Elements   ///
 ////////////////////////////////////////
@@ -32,8 +30,8 @@ movieSearchLink.click(function(event) {
     findMoviesLink.removeClass('active');
     movieSearchLink.addClass('active');
 
-    newMoviesView.addClass("hidden").removeClass('show');
-    userMoviesView.addClass("show").removeClass("hidden");
+    newMoviesView.addClass("hidden");
+    userMoviesView.removeClass("hidden");
 });
 
 // when 'find new movies' link is clicked show the search bar in new movies div
@@ -43,8 +41,8 @@ findMoviesLink.click(function(event) {
     movieSearchLink.removeClass('active');
     findMoviesLink.addClass('active');
 
-    userMoviesView.addClass('hidden').removeClass('show');
-    newMoviesView.addClass('show').removeClass('hidden');
+    userMoviesView.addClass('hidden');
+    newMoviesView.removeClass('hidden');
 })
 
 // when 'show watched' tab is clicked show the users watched movies and hide unwatched movies
@@ -54,8 +52,8 @@ watchedMoviesTab.click(function(event) {
     watchedMoviesTab.addClass('activeWatch');
     unwatchedMoviesTab.removeClass('activeWatch');
 
-    watchedMoviesDiv.addClass('show').removeClass('hidden');
-    unwatchedMoviesDiv.addClass('hidden').removeClass('show');
+    watchedMoviesDiv.removeClass('hidden');
+    unwatchedMoviesDiv.addClass('hidden');
 })
 
 // when 'show unwatched' tab is clicked show the users unwatched movies and hide users watched movies
@@ -65,8 +63,8 @@ unwatchedMoviesTab.click(function(event) {
     watchedMoviesTab.removeClass('activeWatch');
     unwatchedMoviesTab.addClass('activeWatch');
 
-    watchedMoviesDiv.addClass('hidden').removeClass('show');
-    unwatchedMoviesDiv.addClass('show').removeClass('hidden');
+    watchedMoviesDiv.addClass('hidden');
+    unwatchedMoviesDiv.removeClass('hidden');
 })
 
 
