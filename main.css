@@ -90,3 +90,16 @@ img {
 .rating-stars ul > li.star.selected > i.fa {
   color:#FF912C;
 }
+
+.fa-trash-o {
+  text-decoration: none;
+  position: absolute;
+  left: 85%;
+  top: 2%;
+  color: black;
+}
+.fa-trash-o:hover {
+  size: 120%;
+  text-decoration: none;
+  color: red;
+}
