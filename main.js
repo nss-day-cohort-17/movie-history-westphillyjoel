@@ -9,6 +9,7 @@ let findMoviesLink = $("#find-new-movies");
 // divs to hide or show
 let userMoviesView = $("#userMovies");
 let newMoviesView = $("#findNewMovies");
+let loginView = $('.login-page');
 
 // links from watch or unwatched movies tab selection
 let unwatchedMoviesTab = $("#unwatchedTab");
@@ -32,6 +33,7 @@ movieSearchLink.click(function(event) {
     findMoviesLink.removeClass('active');
     movieSearchLink.addClass('active');
 
+    loginView.addClass("hidden");
     newMoviesView.addClass("hidden");
     userMoviesView.removeClass("hidden");
   }
@@ -46,6 +48,7 @@ findMoviesLink.click(function(event) {
     movieSearchLink.removeClass('active');
     findMoviesLink.addClass('active');
 
+    loginView.addClass("hidden");
     userMoviesView.addClass('hidden');
     newMoviesView.removeClass('hidden');
   }
@@ -60,6 +63,7 @@ watchedMoviesTab.click(function(event) {
     watchedMoviesTab.addClass('activeWatch');
     unwatchedMoviesTab.removeClass('activeWatch');
 
+    loginView.addClass("hidden");
     watchedMoviesDiv.removeClass('hidden');
     unwatchedMoviesDiv.addClass('hidden');
   }
@@ -74,6 +78,7 @@ unwatchedMoviesTab.click(function(event) {
     watchedMoviesTab.removeClass('activeWatch');
     unwatchedMoviesTab.addClass('activeWatch');
 
+    loginView.addClass("hidden");
     watchedMoviesDiv.addClass('hidden');
     unwatchedMoviesDiv.removeClass('hidden');
   }
