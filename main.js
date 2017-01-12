@@ -1,5 +1,9 @@
 console.log("main.js loaded")
 
+////////////////////////////////////////
+///   Store Commonly Used Elements   ///
+////////////////////////////////////////
+
 // buttons or links from navbar
 let movieSearchLink = $("#search-your-movies");
 let findMoviesLink = $("#find-new-movies");
@@ -66,41 +70,6 @@ unwatchedMoviesTab.click(function(event) {
 })
 
 
-/*---------------------*/
-// Testing getting JSON
-/*---------------------*/
-
-var storeSearchedMoviesPromise;
-
-var storedSearchedMovies;
-
-
-function getMovieJSON(movieURL) {
-    return movieSearchRequest.then(JSON.parse)
-}
-
-// Promise Factory for Movies
-function requestMovieInfo(url){
-    return new Promise (function(resolve, reject){
-        var xhr = new XMLHttpRequest()
-        xhr.addEventListener('load', function(event){
-            if (event.target.status < 400) {
-                resolve(JSON.parse(event.target.responseText))
-            } else {
-                reject(event.target.status)
-            }
-        })
-        xhr.addEventListener('error', reject)
-        xhr.open('GET', url)
-        xhr.send()
-    })
-}
-
-
-/***************************************/
-/******  EVENT LISTENERS      **********/
-/***************************************/
-
 // Event listener for search button
 
 $('#searchMovies--button').click(function(event){
@@ -114,14 +83,14 @@ $('#searchMovies--button').click(function(event){
     storeSearchedMoviesPromise = requestMovieInfo('http://www.omdbapi.com/?s=' + searchQuery)
         .then(function(movieValue){
             storedSearchedMovies = movieValue;
+            console.log("storeSearchedMovies", storedSearchedMovies)
 
-            addNewSearchedMovies(storedSearchedMovies)
+            getFullMovieInfo(storedSearchedMovies.Search)
+            //addNewSearchedMovies(storedSearchedMovies)
         })
-    // storeMovie = getMovieJSON(movieSearchRequest('http://www.omdbapi.com/?s=' + searchQuery))
-    // addNewSearchedMovies(storedSearchedMovies)
 })
 
-// Event listener on search field
+// Event listener on search field with enter key pressed
 $('#searchMovies--input-field').on('keydown', function(event){
   if (event.keyCode === 13) {  //checks whether the pressed key is "Enter"
     var searchQuery = $('#searchMovies--input-field').val()
@@ -191,7 +160,7 @@ unwatchedMoviesTab.click(function(event){
 
 
 
-// Event listener to add movies to will watch list
+// Event listener to add movies to non-watched list
 $('body').on("click", '#add-movie-to-unwatched-list', function(event){
   console.log('add movie to unwatched list link clicked')
   //console.log("test", event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText)
@@ -248,9 +217,65 @@ $('body').on("click", '#add-to-watched-movies-link', function(event){
 
 })
 
+
+/*---------------------*/
+// Testing getting JSON
+/*---------------------*/
+
+var storeSearchedMoviesPromise;
+
+var storedSearchedMovies;
+
+
+// function getMovieJSON(movieURL) {
+//     return movieSearchRequest.then(JSON.parse)
+// }
+
+// Promise Factory for Movies
+function requestMovieInfo(url){
+    return new Promise (function(resolve, reject){
+        var xhr = new XMLHttpRequest()
+        xhr.addEventListener('load', function(event){
+            if (event.target.status < 400) {
+                resolve(JSON.parse(event.target.responseText))
+            } else {
+                reject(event.target.status)
+            }
+        })
+        xhr.addEventListener('error', reject)
+        xhr.open('GET', url)
+        xhr.send()
+    })
+}
+
+
 /****************************************/
 /******   FUNCTIONS       ***************/
 /****************************************/
+
+
+function getFullMovieInfo(movieList){
+  console.log("getFullMovieInfo function called")
+
+  console.log(movieList)
+  var updatedMoviePromise;
+  var fullMovieObjectList = {}
+
+  for (key in movieList){
+    //movielist[key]
+    // do api call to get full information
+    var url = `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
+
+    var updatedMoviePromise = requestMovieInfo(url)
+    // $.ajax({
+    //   method: 'GET',
+    //   url: `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
+    //   'success'
+    // })
+  }
+
+  return fullMovieObjectList
+}
 
 
 function addNewSearchedMovies(moviesList){
@@ -314,18 +339,6 @@ function addNewSearchedMovies(moviesList){
         }
     }
 }
-
-
-
-// Add searched movies to a will watch list on firebase
-
-function addNewToMovieWatchList(){
-
-  // grab add to watch list div
-  // $('to-watch').click(
-  //   function(event){}
-}
-
 
 
 // show YOUR Watched movies
