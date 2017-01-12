@@ -258,15 +258,20 @@ function getFullMovieInfo(movieList){
   console.log("getFullMovieInfo function called")
 
   console.log(movieList)
+  var updatedMoviePromise;
   var fullMovieObjectList = {}
 
   for (key in movieList){
     //movielist[key]
     // do api call to get full information
-    $.ajax({
-      method: 'GET',
-      url: `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
-    })
+    var url = `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
+
+    var updatedMoviePromise = requestMovieInfo(url)
+    // $.ajax({
+    //   method: 'GET',
+    //   url: `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
+    //   'success'
+    // })
   }
 
   return fullMovieObjectList
