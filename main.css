@@ -96,10 +96,18 @@ img {
   position: absolute;
   left: 85%;
   top: 2%;
-  color: black;
+  color: yellow;
 }
 .fa-trash-o:hover {
   size: 120%;
   text-decoration: none;
   color: red;
+}
+.form-signin {
+  width: 40%;
+  margin: 0 auto;
+}
+.form-signin:nth-child(1n+0) {
+  margin-bottom: 10em;
+  padding-bottom: 10em;
 }
