@@ -83,8 +83,10 @@ $('#searchMovies--button').click(function(event){
     storeSearchedMoviesPromise = requestMovieInfo('http://www.omdbapi.com/?s=' + searchQuery)
         .then(function(movieValue){
             storedSearchedMovies = movieValue;
+            console.log("storeSearchedMovies", storedSearchedMovies)
 
-            addNewSearchedMovies(storedSearchedMovies)
+            getFullMovieInfo(storedSearchedMovies.Search)
+            //addNewSearchedMovies(storedSearchedMovies)
         })
 })
 
@@ -158,7 +160,7 @@ unwatchedMoviesTab.click(function(event){
 
 
 
-// Event listener to add movies to will watch list
+// Event listener to add movies to non-watched list
 $('body').on("click", '#add-movie-to-unwatched-list', function(event){
   console.log('add movie to unwatched list link clicked')
   //console.log("test", event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText)
@@ -225,9 +227,9 @@ var storeSearchedMoviesPromise;
 var storedSearchedMovies;
 
 
-function getMovieJSON(movieURL) {
-    return movieSearchRequest.then(JSON.parse)
-}
+// function getMovieJSON(movieURL) {
+//     return movieSearchRequest.then(JSON.parse)
+// }
 
 // Promise Factory for Movies
 function requestMovieInfo(url){
@@ -250,6 +252,25 @@ function requestMovieInfo(url){
 /****************************************/
 /******   FUNCTIONS       ***************/
 /****************************************/
+
+
+function getFullMovieInfo(movieList){
+  console.log("getFullMovieInfo function called")
+
+  console.log(movieList)
+  var fullMovieObjectList = {}
+
+  for (key in movieList){
+    //movielist[key]
+    // do api call to get full information
+    $.ajax({
+      method: 'GET',
+      url: "'http://www.omdbapi.com/?t='"
+    })
+  }
+
+  return fullMovieObjectList
+}
 
 
 function addNewSearchedMovies(moviesList){
@@ -313,18 +334,6 @@ function addNewSearchedMovies(moviesList){
         }
     }
 }
-
-
-
-// Add searched movies to a will watch list on firebase
-
-function addNewToMovieWatchList(){
-
-  // grab add to watch list div
-  // $('to-watch').click(
-  //   function(event){}
-}
-
 
 
 // show YOUR Watched movies
