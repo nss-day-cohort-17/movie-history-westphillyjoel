@@ -267,6 +267,10 @@ function getFullMovieInfo(movieList){
     var url = `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
 
     var updatedMoviePromise = requestMovieInfo(url)
+
+    updatedMoviePromise.then(function(data){
+      fullMovieObjectList.push(data)
+    })
     // $.ajax({
     //   method: 'GET',
     //   url: `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
