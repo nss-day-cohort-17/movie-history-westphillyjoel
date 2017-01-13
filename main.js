@@ -3,19 +3,19 @@
 ////////////////////////////////////////
 
 // buttons or links from navbar
-let movieSearchLink = $("#search-your-movies");
-let findMoviesLink = $("#find-new-movies");
+let searchYourMoviesButton = $("#search-your-movies");
+let findNewMoviesButton = $("#find-new-movies");
 
 // divs to hide or show
 let userMoviesView = $("#userMovies");
 let newMoviesView = $("#findNewMovies");
 let loginView = $('.login-page');
 
-// links from watch or unwatched movies tab selection
+// links from user watch or unwatched movies tab selection
 let unwatchedMoviesTab = $("#unwatchedTab");
 let watchedMoviesTab = $("#watchedTab")
 
-// div to hide or show watched or unwatched users movies
+// div to hide or show users watched or unwatched movies
 let watchedMoviesDiv = $("#userWatchedMovies");
 let unwatchedMoviesDiv = $("#userUnwatchedMovies");
 
@@ -26,11 +26,6 @@ let unwatchedMoviesDiv = $("#userUnwatchedMovies");
 var storeSearchedMoviesPromise;
 
 var storedSearchedMovies;
-
-
-// function getMovieJSON(movieURL) {
-//     return movieSearchRequest.then(JSON.parse)
-// }
 
 // Promise Factory for Movies
 function requestMovieInfo(url){
@@ -54,13 +49,13 @@ function requestMovieInfo(url){
 ///////////////////////////
 
 // when 'search your movies' is clicked show the users movie views
-movieSearchLink.click(function(event) {
+searchYourMoviesButton.click(function(event) {
   event.preventDefault();
 
   if (firebase.auth().currentUser !== null) {
     //logged in
-    findMoviesLink.removeClass('active');
-    movieSearchLink.addClass('active');
+    findNewMoviesButton.removeClass('active');
+    searchYourMoviesButton.addClass('active');
 
     loginView.addClass("hidden");
     newMoviesView.addClass("hidden");
@@ -69,13 +64,13 @@ movieSearchLink.click(function(event) {
 });
 
 // when 'find new movies' link is clicked show the search bar in new movies div
-findMoviesLink.click(function(event) {
+findNewMoviesButton.click(function(event) {
   event.preventDefault();
 
   if (firebase.auth().currentUser !== null) {
     //logged in
-    movieSearchLink.removeClass('active');
-    findMoviesLink.addClass('active');
+    searchYourMoviesButton.removeClass('active');
+    findNewMoviesButton.addClass('active');
 
     loginView.addClass("hidden");
     userMoviesView.addClass('hidden');

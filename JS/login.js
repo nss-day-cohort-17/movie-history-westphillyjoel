@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(() => {
   if (firebase.auth().currentUser !== null) {
     //logged in
     $('#userMovies').removeClass('hidden');
-    movieSearchLink.addClass('active')
+    $("#search-your-movies").addClass('active')
     $('#findNewMovies').addClass('hidden');
     $('.login-page').addClass('hidden');
   } else {
