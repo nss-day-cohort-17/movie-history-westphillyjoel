@@ -47,35 +47,25 @@ function requestMovieInfo(url){
 ///   Event Listeners   ///
 ///////////////////////////
 
+///// function to add event listeners to changing divs
+function changeView (button1, button2, view1, view2, view3) {
+  button2.click(function(e) {
+    e.preventDefault();
+
+    if (firebase.auth().currentUser !== null) {
+      button1.removeClass('active');
+      button2.addClass('active');
+
+      view1.addClass("hidden");
+      view2.addClass("hidden");
+      view3.removeClass("hidden");
+    }
+  })
+}
 // when 'search your movies' is clicked show the users movie views
-searchYourMoviesButton.click(function(event) {
-  event.preventDefault();
-
-  if (firebase.auth().currentUser !== null) {
-    // logged in
-    findNewMoviesButton.removeClass('active');
-    searchYourMoviesButton.addClass('active');
-
-    loginView.addClass("hidden");
-    newMoviesView.addClass("hidden");
-    userMoviesView.removeClass("hidden");
-  }
-});
-
+changeView(findNewMoviesButton, searchYourMoviesButton, loginView, newMoviesView, userMoviesView)
 // when 'find new movies' link is clicked show the search bar in new movies div
-findNewMoviesButton.click(function(event) {
-  event.preventDefault();
-
-  if (firebase.auth().currentUser !== null) {
-    //logged in
-    searchYourMoviesButton.removeClass('active');
-    findNewMoviesButton.addClass('active');
-
-    loginView.addClass("hidden");
-    userMoviesView.addClass('hidden');
-    newMoviesView.removeClass('hidden');
-  }
-})
+changeView(searchYourMoviesButton, findNewMoviesButton, loginView, userMoviesView, newMoviesView)
 
 // when 'show watched' tab is clicked show the users watched movies and hide unwatched movies
 watchedMoviesTab.click(function(event) {
@@ -195,8 +185,7 @@ $('body').on("click", '#add-movie-to-unwatched-list', function(event){
   // get selected movies info
   var selectedMoviePromise = requestMovieInfo('http://www.omdbapi.com/?t=' + movieTitle + "&y=" + movieYear)
   selectedMoviePromise.then(function(movie){
-    // send movie to the unwatched list
-    // add movie info to firebase database
+    // add movie info to firebase database unwatched list
     var request = new XMLHttpRequest()
     let uid = firebase.auth().currentUser.uid;
     request.open('POST', `https://west-philly-joel-movie-history.firebaseio.com/${uid}/unwatchedMoviesList.json`)
