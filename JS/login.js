@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(() => {
   if (firebase.auth().currentUser !== null) {
     //logged in
     $('#userMovies').removeClass('hidden');
-    movieSearchLink.addClass('active')
+    $("#search-your-movies").addClass('active')
     $('#findNewMovies').addClass('hidden');
     $('.login-page').addClass('hidden');
   } else {
@@ -45,7 +45,6 @@ $('.form-signin').submit((e) => {
     })
     .then(() => {
       $('.login-page').addClass('hidden');
-      console.log('login page hidden')
     })
 });
 
@@ -55,7 +54,6 @@ $('#register').click((e) => {
 
   let email = $('input[type="email"]').val();
   let password = $('input[type="password"]').val();
-  //console.log('register me');
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -65,12 +63,10 @@ $('#register').click((e) => {
     })
     .then(() => {
       $('.login-page').addClass('hidden');
-      console.log('login page hidden')
     });
 });
 
 ///// sign out
 $('#logoutButton').click(() => {
-  //console.log('clicked');
   firebase.auth().signOut();
 });
