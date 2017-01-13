@@ -1,5 +1,3 @@
-console.log("main.js loaded")
-
 ////////////////////////////////////////
 ///   Store Commonly Used Elements   ///
 ////////////////////////////////////////
@@ -11,6 +9,7 @@ let findMoviesLink = $("#find-new-movies");
 // divs to hide or show
 let userMoviesView = $("#userMovies");
 let newMoviesView = $("#findNewMovies");
+let loginView = $('.login-page');
 
 // links from watch or unwatched movies tab selection
 let unwatchedMoviesTab = $("#unwatchedTab");
@@ -56,46 +55,62 @@ function requestMovieInfo(url){
 
 // when 'search your movies' is clicked show the users movie views
 movieSearchLink.click(function(event) {
-    event.preventDefault();
+  event.preventDefault();
 
+  if (firebase.auth().currentUser !== null) {
+    //logged in
     findMoviesLink.removeClass('active');
     movieSearchLink.addClass('active');
 
-    newMoviesView.addClass("hidden").removeClass('show');
-    userMoviesView.addClass("show").removeClass("hidden");
+    loginView.addClass("hidden");
+    newMoviesView.addClass("hidden");
+    userMoviesView.removeClass("hidden");
+  }
 });
 
 // when 'find new movies' link is clicked show the search bar in new movies div
 findMoviesLink.click(function(event) {
-    event.preventDefault();
+  event.preventDefault();
 
+  if (firebase.auth().currentUser !== null) {
+    //logged in
     movieSearchLink.removeClass('active');
     findMoviesLink.addClass('active');
 
-    userMoviesView.addClass('hidden').removeClass('show');
-    newMoviesView.addClass('show').removeClass('hidden');
+    loginView.addClass("hidden");
+    userMoviesView.addClass('hidden');
+    newMoviesView.removeClass('hidden');
+  }
 })
 
 // when 'show watched' tab is clicked show the users watched movies and hide unwatched movies
 watchedMoviesTab.click(function(event) {
-    event.preventDefault();
+  event.preventDefault();
 
+  if (firebase.auth().currentUser !== null) {
+    //logged in
     watchedMoviesTab.addClass('activeWatch');
     unwatchedMoviesTab.removeClass('activeWatch');
 
-    watchedMoviesDiv.addClass('show').removeClass('hidden');
-    unwatchedMoviesDiv.addClass('hidden').removeClass('show');
+    loginView.addClass("hidden");
+    watchedMoviesDiv.removeClass('hidden');
+    unwatchedMoviesDiv.addClass('hidden');
+  }
 })
 
 // when 'show unwatched' tab is clicked show the users unwatched movies and hide users watched movies
 unwatchedMoviesTab.click(function(event) {
-    event.preventDefault();
+  event.preventDefault();
 
+  if (firebase.auth().currentUser !== null) {
+    //logged in
     watchedMoviesTab.removeClass('activeWatch');
     unwatchedMoviesTab.addClass('activeWatch');
 
-    watchedMoviesDiv.addClass('hidden').removeClass('show');
-    unwatchedMoviesDiv.addClass('show').removeClass('hidden');
+    loginView.addClass("hidden");
+    watchedMoviesDiv.addClass('hidden');
+    unwatchedMoviesDiv.removeClass('hidden');
+  }
 })
 
 
@@ -321,6 +336,7 @@ function addNewSearchedMovies(moviesList){
 
                                         <!--Card image-->
                                         <div class="view overlay hm-white-slight">
+                                          <a class='fa fa-trash-o fa-2x'></a>
                                           <img src="${movieArray[i].Poster}" class="img-fluid" alt="">
                                           <a>
                                           <div class="mask"></div>
@@ -384,6 +400,7 @@ function addWatchedMoviesToPage(watchedMovies){
 
                                       <!--Card image-->
                                       <div class="view overlay hm-white-slight">
+                                        <a class='fa fa-trash-o fa-2x'></a>
                                         <img src="${watchedMovies[key].Poster}" class="img-fluid" alt="">
                                         <a>
                                             <div class="mask"></div>
@@ -445,7 +462,9 @@ function addUnwatchedMoviesToPage(unwatchedMovies){
 
                                       <!--Card image-->
                                       <div class="view overlay hm-white-slight">
+
                                       <a class='delete-movie-button fa fa-trash-o fa-2x'></a>
+
                                         <img src="${unwatchedMovies[key].Poster}" class="img-fluid" alt="">
                                         <a>
                                             <div class="mask"></div>
