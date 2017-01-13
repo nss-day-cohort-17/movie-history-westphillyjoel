@@ -4,10 +4,11 @@
 
 <head>
   <meta charset="UTF-8">
-   <title>Document</title>
-   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="main.css">
+  <title>Document</title>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
@@ -24,7 +25,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">WestPhilly</a>
+          <a class="navbar-brand" href="#">WestPhillyJoelphia</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -34,13 +35,31 @@
             <li id="find-new-movies"><a href="#">Find New Movies</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Register</a></li>
             <li><a href="#">Logout</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+
+    <!-- login div -->
+    <!-- +++++++++ -->
+    <div class="login-page">
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <!-- <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div> -->
+        <!-- <input type='submit' -->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-secondary btn-block" type="submit">Register</button>
+      </form>
+    </div>
 
     <!-- users Movies -->
     <!-- ************ -->
@@ -68,10 +87,11 @@
 
                   <!--Card image-->
                   <div class="view overlay hm-white-slight">
-                      <img src="http://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2840%29.jpg" class="img-fluid" alt="">
-                      <a>
-                          <div class="mask"></div>
-                      </a>
+                    <a class='fa fa-trash-o fa-2x'></a>
+                    <img src="http://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2840%29.jpg" class="img-fluid" alt="">
+                    <a>
+                      <div class="mask"></div>
+                    </a>
                   </div>
                   <!--/.Card image-->
 
@@ -99,20 +119,21 @@
 
                   <!--Card image-->
                   <div class="view overlay hm-white-slight">
-                      <img src="http://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2840%29.jpg" class="img-fluid" alt="">
-                      <a>
-                          <div class="mask"></div>
-                      </a>
+                    <a class='fa fa-trash-o fa-2x'></a>
+                    <img src="http://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2840%29.jpg" class="img-fluid" alt="">
+                    <a>
+                      <div class="mask"></div>
+                    </a>
                   </div>
                   <!--/.Card image-->
 
                   <!--Card content-->
                   <div class="card-block">
-                      <h5 class="red-text"><i class="fa fa-money"></i> Business</h5>
-                      <!--Title-->
-                      <h4 class="card-title">Let your startup grow!</h4>
-                      <!--Text-->
-                      <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.</p>
+                    <h5 class="red-text"><i class="fa fa-money"></i> Business</h5>
+                    <!--Title-->
+                    <h4 class="card-title">Let your startup grow!</h4>
+                    <!--Text-->
+                    <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.</p>
                   </div>
                   <!--/.Card content-->
 
@@ -121,10 +142,7 @@
               <div id="watched">
                   <a href="">Watched</a>
               </div>
-
           </div>
-
-
           <div class="col-sm-4">
 
               <!--Card3-->
@@ -132,6 +150,7 @@
 
                   <!--Card image-->
                   <div class="view overlay hm-white-slight">
+                      <a class='fa fa-trash-o fa-2x'></a>
                       <img src="http://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2840%29.jpg" class="img-fluid" alt="">
                       <a>
                           <div class="mask"></div>
@@ -146,21 +165,34 @@
                       <h4 class="card-title">Let your startup grow!</h4>
                       <!--Text-->
                       <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.</p>
-
-
                   </div>
                   <!--/.Card content-->
-
               </div>
               <!--/.Card-->
-                  <div id="rating">
-                      <h5>Ratings</h5>
-                      <span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                  </div>
+              <div id="rating">
+                  <h5>Ratings</h5>
+                  <section class='rating-widget'>
+                    <!-- Rating Stars Box -->
+                    <div class='rating-stars text-center'>
+                      <ul id='stars'>
+                        <li class='star' title='Poor' data-value='1'>
+                          <i class='fa fa-star fa-fw'></i>
+                        </li>
+                        <li class='star' title='Fair' data-value='2'>
+                          <i class='fa fa-star fa-fw'></i>
+                        </li>
+                        <li class='star' title='Good' data-value='3'>
+                          <i class='fa fa-star fa-fw'></i>
+                        </li>
+                        <li class='star' title='Excellent' data-value='4'>
+                          <i class='fa fa-star fa-fw'></i>
+                        </li>
+                        <li class='star' title='WOW!!!' data-value='5'>
+                          <i class='fa fa-star fa-fw'></i>
+                        </li>
+                      </ul>
+                    </div>
+                  </section>
               </div>
       </div>
 

@@ -14,9 +14,7 @@
     display: flex;
 }
 img {
-    max-height: 300px;
-    max-width: 300px;
-    min-width: 354px;
+    width: 100%;
     border-bottom: 1px;
 }
 
@@ -25,8 +23,6 @@ img {
   webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-  min-height: 400px;
-  max-height: 400px;
 }
 
 #rating {
@@ -62,4 +58,56 @@ img {
 .activeWatch {
   text-decoration: underline;
   background-color: #8DEA91;
+}
+
+.text-center {text-align:center;}
+
+/* Rating Star Widgets Style */
+.rating-stars ul {
+  list-style-type:none;
+  padding:0;
+
+  -moz-user-select:none;
+  -webkit-user-select:none;
+}
+.rating-stars ul > li.star {
+  display:inline-block;
+
+}
+
+/* Idle State of the stars */
+.rating-stars ul > li.star > i.fa {
+  font-size: 1.5em; /* Change the size of the stars */
+  color:#ccc; /* Color on idle state */
+}
+
+/* Hover state of the stars */
+.rating-stars ul > li.star.hover > i.fa {
+  color:#FFCC36;
+}
+
+/* Selected state of the stars */
+.rating-stars ul > li.star.selected > i.fa {
+  color:#FF912C;
+}
+
+.fa-trash-o {
+  text-decoration: none;
+  position: absolute;
+  left: 85%;
+  top: 2%;
+  color: yellow;
+}
+.fa-trash-o:hover {
+  size: 120%;
+  text-decoration: none;
+  color: red;
+}
+.form-signin {
+  width: 40%;
+  margin: 0 auto;
+}
+.form-signin:nth-child(1n+0) {
+  margin-bottom: 10em;
+  padding-bottom: 10em;
 }
