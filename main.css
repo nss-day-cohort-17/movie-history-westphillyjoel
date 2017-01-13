@@ -111,3 +111,6 @@ img {
   margin-bottom: 10em;
   padding-bottom: 10em;
 }
+#logoutButton:hover {
+  background-color: #E37574;
+}
