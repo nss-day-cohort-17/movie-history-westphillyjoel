@@ -197,7 +197,8 @@ $('body').on("click", '#add-movie-to-unwatched-list', function(event){
     // send movie to the unwatched list
     //add movie info to firebase database
     var request = new XMLHttpRequest()
-    request.open('POST', 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList.json')
+    let uid = firebase.auth().currentUser.uid;
+    request.open('POST', `https://west-philly-joel-movie-history.firebaseio.com/${uid}/unwatchedMoviesList.json`)
     request.send(JSON.stringify(movie))
   })
 
@@ -226,7 +227,8 @@ $('body').on("click", '#add-to-watched-movies-link', function(event){
     // send movie to the watched list
     //add movie info to firebase database
     var request = new XMLHttpRequest()
-    request.open('POST', 'https://west-philly-joel-movie-history.firebaseio.com/watchedMoviesList.json')
+    let uid = firebase.auth().currentUser.uid;
+    request.open('POST', `https://west-philly-joel-movie-history.firebaseio.com/${uid}/watchedMoviesList.json`)
     request.send(JSON.stringify(movie))
   })
 
@@ -361,11 +363,10 @@ function addNewSearchedMovies(moviesList){
 }
 
 
-// show YOUR Watched movies
-
+///// show user's Watched movies
 function addWatchedMoviesToPage(watchedMovies){
-  console.log("addWatchedMoviesToPage function called")
-  console.log("watchedMovies", watchedMovies)
+  // console.log("addWatchedMoviesToPage function called")
+  // console.log("watchedMovies", watchedMovies)
 
   // clear watched movies div
   $('#userWatchedMovies').empty()
@@ -440,7 +441,7 @@ function addUnwatchedMoviesToPage(unwatchedMovies){
   //loop over watched movies
   // for(var i = 0; i < Object.keys(unwatchedMovies).length; i++){
   for (key in unwatchedMovies){
-    console.log("current movie", unwatchedMovies[key])
+    // console.log("current movie", unwatchedMovies[key])
     // grab div that will show Watched movies
 
     $('#userUnwatchedMovies').append(`  <div class="col-sm-4">
