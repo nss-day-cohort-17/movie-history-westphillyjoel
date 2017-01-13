@@ -20,6 +20,35 @@ let watchedMoviesTab = $("#watchedTab")
 let watchedMoviesDiv = $("#userWatchedMovies");
 let unwatchedMoviesDiv = $("#userUnwatchedMovies");
 
+/*----------------------------------*/
+// Getting JSON Variables/Functions
+/*----------------------------------*/
+
+var storeSearchedMoviesPromise;
+
+var storedSearchedMovies;
+
+
+// function getMovieJSON(movieURL) {
+//     return movieSearchRequest.then(JSON.parse)
+// }
+
+// Promise Factory for Movies
+function requestMovieInfo(url){
+    return new Promise (function(resolve, reject){
+        var xhr = new XMLHttpRequest()
+        xhr.addEventListener('load', function(event){
+            if (event.target.status < 400) {
+                resolve(JSON.parse(event.target.responseText))
+            } else {
+                reject(event.target.status)
+            }
+        })
+        xhr.addEventListener('error', reject)
+        xhr.open('GET', url)
+        xhr.send()
+    })
+}
 
 ///////////////////////////
 ///   Event Listeners   ///
@@ -76,19 +105,20 @@ $('#searchMovies--button').click(function(event){
     console.log("Search for Movies Button Clicked")
     event.preventDefault()
 
-    var searchQuery = $('#searchMovies--input-field').val()
+    // store search query
+   var searchQuery = $('#searchMovies--input-field').val()
     console.log(searchQuery)
 
     // Promise for searching for new movies
     storeSearchedMoviesPromise = requestMovieInfo('http://www.omdbapi.com/?s=' + searchQuery)
         .then(function(movieValue){
             storedSearchedMovies = movieValue;
-            console.log("storeSearchedMovies", storedSearchedMovies)
 
-            getFullMovieInfo(storedSearchedMovies.Search)
-            //addNewSearchedMovies(storedSearchedMovies)
-        })
+            console.log("checking storeSearchedMovies", storedSearchedMovies)
+            addNewSearchedMovies(storedSearchedMovies.Search) // was just storedSearchedMovies
+    })
 })
+
 
 // Event listener on search field with enter key pressed
 $('#searchMovies--input-field').on('keydown', function(event){
@@ -101,7 +131,8 @@ $('#searchMovies--input-field').on('keydown', function(event){
         .then(function(movieValue){
             storedSearchedMovies = movieValue;
 
-            addNewSearchedMovies(storedSearchedMovies)
+            console.log("checking storeSearchedMovies", storedSearchedMovies)
+            addNewSearchedMovies(storedSearchedMovies.Search) // was just storedSearchedMovies
         })
   }
 })
@@ -194,6 +225,8 @@ $('body').on("click", '#add-to-watched-movies-link', function(event){
   console.log('add-movie-to-watched-movies-link clicked')
   //console.log("test", event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText)
 
+  //
+
   var target = $('event.target') // JQUERY SUCKS
 
   var movieTitle = event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText
@@ -218,69 +251,12 @@ $('body').on("click", '#add-to-watched-movies-link', function(event){
 })
 
 
-/*---------------------*/
-// Testing getting JSON
-/*---------------------*/
-
-var storeSearchedMoviesPromise;
-
-var storedSearchedMovies;
-
-
-// function getMovieJSON(movieURL) {
-//     return movieSearchRequest.then(JSON.parse)
-// }
-
-// Promise Factory for Movies
-function requestMovieInfo(url){
-    return new Promise (function(resolve, reject){
-        var xhr = new XMLHttpRequest()
-        xhr.addEventListener('load', function(event){
-            if (event.target.status < 400) {
-                resolve(JSON.parse(event.target.responseText))
-            } else {
-                reject(event.target.status)
-            }
-        })
-        xhr.addEventListener('error', reject)
-        xhr.open('GET', url)
-        xhr.send()
-    })
-}
-
 
 /****************************************/
 /******   FUNCTIONS       ***************/
 /****************************************/
 
-
-function getFullMovieInfo(movieList){
-  console.log("getFullMovieInfo function called")
-
-  console.log(movieList)
-  var updatedMoviePromise;
-  var fullMovieObjectList = {}
-
-  for (key in movieList){
-    //movielist[key]
-    // do api call to get full information
-    var url = `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
-
-    var updatedMoviePromise = requestMovieInfo(url)
-
-    updatedMoviePromise.then(function(data){
-      fullMovieObjectList.push(data)
-    })
-    // $.ajax({
-    //   method: 'GET',
-    //   url: `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
-    //   'success'
-    // })
-  }
-
-  return fullMovieObjectList
-}
-
+// Function for adding searched movies to the page
 
 function addNewSearchedMovies(moviesList){
     console.log("addNewSearchedMovies function called")
@@ -288,17 +264,14 @@ function addNewSearchedMovies(moviesList){
     // Clear Movie Div
     $('.foundMovies').empty()
 
-    var movieArray = moviesList;
-    console.log(movieArray)
-
-    movieArray = moviesList.Search
-    console.log(movieArray)
+    var movieArray = moviesList; // was moviesList.Searched
 
     // Loop over searched movies and add them to the DOM
     for (var i = 0; i < movieArray.length; i++) {
-        console.log(movieArray[i])
-        console.log(movieArray[i].Title)
-        if (i%3 === 0) {
+        // console.log("Is this for loop in addNewSearchedMovies running?")
+        // console.log(movieArray[i])
+        // console.log(movieArray[i].Title)
+        if (i % 3 === 0) {
             $('.foundMovies').append(`<div class="row">`)
         }
         // Grab Div to store Searched Movies
@@ -345,7 +318,7 @@ function addNewSearchedMovies(moviesList){
 }
 
 
-// show YOUR Watched movies
+// function for adding WATCHED movies to the page
 
 function addWatchedMoviesToPage(watchedMovies){
   console.log("addWatchedMoviesToPage function called")
@@ -411,7 +384,7 @@ function addWatchedMoviesToPage(watchedMovies){
 }
 
 
-// show YOUR UNwatched movies
+// function to add UNWATCHED movies to the page
 
 function addUnwatchedMoviesToPage(unwatchedMovies){
   console.log("addUnwatchedMoviesToPage function called")
@@ -423,10 +396,10 @@ function addUnwatchedMoviesToPage(unwatchedMovies){
   //loop over watched movies
   // for(var i = 0; i < Object.keys(unwatchedMovies).length; i++){
   for (key in unwatchedMovies){
-    console.log("current movie", unwatchedMovies[key])
+    console.log("current movie key?", key)
     // grab div that will show Watched movies
 
-    $('#userUnwatchedMovies').append(`  <div class="col-sm-4">
+    $('#userUnwatchedMovies').append(`  <div id="${key}" class="col-sm-4">
 
                                       <!--Card-->
                                       <div class="card card-cascade narrower">
@@ -460,6 +433,11 @@ function addUnwatchedMoviesToPage(unwatchedMovies){
 
                                     </div>`)
   }
+}
+
+
+function removeMovie(){
+  console.log("remove movie function called")
 }
 
 ///////////////////////////////
