@@ -250,7 +250,46 @@ $('body').on("click", '#add-to-watched-movies-link', function(event){
 
 })
 
+// Delete Button(tash can iamge) event listener
+$('body').on("click", '.delete-movie-button', function(event){
+  console.log("Delete button clicked - Trash can Image")
 
+  // var target = $('event')
+  // console.log("target", target.find('.unwatched-movie'))
+  // console.log("event target", event.target)
+  // console.log("event", event)
+  // console.log('find parent unwatchedmovie div', event.target.parentElement.parentElement.parentElement)
+
+  //find out if movie has unwatched or watched class
+  var selectedMovie = event.target.parentElement.parentElement.parentElement
+  console.log($(selectedMovie))
+  console.log($(selectedMovie).hasClass('unwatched-movie'))
+  var selectedMovieKey = $(selectedMovie).attr('id')
+  console.log("selectedMovieKey", selectedMovieKey)
+
+  // check if selected movie is unwatched or watched
+
+  // if unwatched delete movie from unwatched database
+  // if($(selectedMovie).hasClass('unwatched-movie')) {
+  //   console.log("deleting unwatched-movie from database")
+
+  //   $.ajax({
+  //     url: 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList/.json',
+  //     type: 'DELETE',
+  //     success: function(result) {
+  //         // Do something with the result
+  //         console.log("movie deleted")
+
+  //     }
+  //   });
+
+  // }
+
+
+  //find out if movie has unwatched or watched class
+
+  //removeMovieFromList()
+})
 
 /****************************************/
 /******   FUNCTIONS       ***************/
@@ -399,13 +438,14 @@ function addUnwatchedMoviesToPage(unwatchedMovies){
     console.log("current movie key?", key)
     // grab div that will show Watched movies
 
-    $('#userUnwatchedMovies').append(`  <div id="${key}" class="card-holder col-sm-4">
+    $('#userUnwatchedMovies').append(`  <div id="${key}" class="unwatched-movie card-holder col-sm-4">
 
                                       <!--Card-->
                                       <div class="card card-cascade narrower">
 
                                       <!--Card image-->
                                       <div class="view overlay hm-white-slight">
+                                      <a class='delete-movie-button fa fa-trash-o fa-2x'></a>
                                         <img src="${unwatchedMovies[key].Poster}" class="img-fluid" alt="">
                                         <a>
                                             <div class="mask"></div>
@@ -436,8 +476,11 @@ function addUnwatchedMoviesToPage(unwatchedMovies){
 }
 
 
-function removeMovie(){
+function removeMovieFromList(){
   console.log("remove movie function called")
+
+  // Find out if movie has an unwatched or watched class
+
 }
 
 ///////////////////////////////
