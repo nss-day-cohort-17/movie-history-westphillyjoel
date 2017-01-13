@@ -19,6 +19,35 @@ let watchedMoviesTab = $("#watchedTab")
 let watchedMoviesDiv = $("#userWatchedMovies");
 let unwatchedMoviesDiv = $("#userUnwatchedMovies");
 
+/*----------------------------------*/
+// Getting JSON Variables/Functions
+/*----------------------------------*/
+
+var storeSearchedMoviesPromise;
+
+var storedSearchedMovies;
+
+
+// function getMovieJSON(movieURL) {
+//     return movieSearchRequest.then(JSON.parse)
+// }
+
+// Promise Factory for Movies
+function requestMovieInfo(url){
+    return new Promise (function(resolve, reject){
+        var xhr = new XMLHttpRequest()
+        xhr.addEventListener('load', function(event){
+            if (event.target.status < 400) {
+                resolve(JSON.parse(event.target.responseText))
+            } else {
+                reject(event.target.status)
+            }
+        })
+        xhr.addEventListener('error', reject)
+        xhr.open('GET', url)
+        xhr.send()
+    })
+}
 
 ///////////////////////////
 ///   Event Listeners   ///
@@ -91,19 +120,20 @@ $('#searchMovies--button').click(function(event){
     console.log("Search for Movies Button Clicked")
     event.preventDefault()
 
-    var searchQuery = $('#searchMovies--input-field').val()
+    // store search query
+   var searchQuery = $('#searchMovies--input-field').val()
     console.log(searchQuery)
 
     // Promise for searching for new movies
     storeSearchedMoviesPromise = requestMovieInfo('http://www.omdbapi.com/?s=' + searchQuery)
         .then(function(movieValue){
             storedSearchedMovies = movieValue;
-            console.log("storeSearchedMovies", storedSearchedMovies)
 
-            getFullMovieInfo(storedSearchedMovies.Search)
-            //addNewSearchedMovies(storedSearchedMovies)
-        })
+            console.log("checking storeSearchedMovies", storedSearchedMovies)
+            addNewSearchedMovies(storedSearchedMovies.Search) // was just storedSearchedMovies
+    })
 })
+
 
 // Event listener on search field with enter key pressed
 $('#searchMovies--input-field').on('keydown', function(event){
@@ -116,7 +146,8 @@ $('#searchMovies--input-field').on('keydown', function(event){
         .then(function(movieValue){
             storedSearchedMovies = movieValue;
 
-            addNewSearchedMovies(storedSearchedMovies)
+            console.log("checking storeSearchedMovies", storedSearchedMovies)
+            addNewSearchedMovies(storedSearchedMovies.Search) // was just storedSearchedMovies
         })
   }
 })
@@ -209,6 +240,8 @@ $('body').on("click", '#add-to-watched-movies-link', function(event){
   console.log('add-movie-to-watched-movies-link clicked')
   //console.log("test", event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText)
 
+  //
+
   var target = $('event.target') // JQUERY SUCKS
 
   var movieTitle = event.target.parentElement.parentElement.getElementsByClassName('card-title')[0].innerText
@@ -232,70 +265,52 @@ $('body').on("click", '#add-to-watched-movies-link', function(event){
 
 })
 
+// Delete Button(tash can iamge) event listener
+$('body').on("click", '.delete-movie-button', function(event){
+  console.log("Delete button clicked - Trash can Image")
 
-/*---------------------*/
-// Testing getting JSON
-/*---------------------*/
+  // var target = $('event')
+  // console.log("target", target.find('.unwatched-movie'))
+  // console.log("event target", event.target)
+  // console.log("event", event)
+  // console.log('find parent unwatchedmovie div', event.target.parentElement.parentElement.parentElement)
 
-var storeSearchedMoviesPromise;
+  //find out if movie has unwatched or watched class
+  var selectedMovie = event.target.parentElement.parentElement.parentElement
+  console.log($(selectedMovie))
+  console.log($(selectedMovie).hasClass('unwatched-movie'))
+  var selectedMovieKey = $(selectedMovie).attr('id')
+  console.log("selectedMovieKey", selectedMovieKey)
 
-var storedSearchedMovies;
+  // check if selected movie is unwatched or watched
+
+  // if unwatched delete movie from unwatched database
+  // if($(selectedMovie).hasClass('unwatched-movie')) {
+  //   console.log("deleting unwatched-movie from database")
+
+  //   $.ajax({
+  //     url: 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList/.json',
+  //     type: 'DELETE',
+  //     success: function(result) {
+  //         // Do something with the result
+  //         console.log("movie deleted")
+
+  //     }
+  //   });
+
+  // }
 
 
-// function getMovieJSON(movieURL) {
-//     return movieSearchRequest.then(JSON.parse)
-// }
+  //find out if movie has unwatched or watched class
 
-// Promise Factory for Movies
-function requestMovieInfo(url){
-    return new Promise (function(resolve, reject){
-        var xhr = new XMLHttpRequest()
-        xhr.addEventListener('load', function(event){
-            if (event.target.status < 400) {
-                resolve(JSON.parse(event.target.responseText))
-            } else {
-                reject(event.target.status)
-            }
-        })
-        xhr.addEventListener('error', reject)
-        xhr.open('GET', url)
-        xhr.send()
-    })
-}
-
+  //removeMovieFromList()
+})
 
 /****************************************/
 /******   FUNCTIONS       ***************/
 /****************************************/
 
-
-function getFullMovieInfo(movieList){
-  console.log("getFullMovieInfo function called")
-
-  console.log(movieList)
-  var updatedMoviePromise;
-  var fullMovieObjectList = {}
-
-  for (key in movieList){
-    //movielist[key]
-    // do api call to get full information
-    var url = `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
-
-    var updatedMoviePromise = requestMovieInfo(url)
-
-    updatedMoviePromise.then(function(data){
-      fullMovieObjectList.push(data)
-    })
-    // $.ajax({
-    //   method: 'GET',
-    //   url: `http://www.omdbapi.com/?t="${movieList[key].Title}&y=${movieList[key].Year}`
-    //   'success'
-    // })
-  }
-
-  return fullMovieObjectList
-}
-
+// Function for adding searched movies to the page
 
 function addNewSearchedMovies(moviesList){
     console.log("addNewSearchedMovies function called")
@@ -303,17 +318,14 @@ function addNewSearchedMovies(moviesList){
     // Clear Movie Div
     $('.foundMovies').empty()
 
-    var movieArray = moviesList;
-    console.log(movieArray)
-
-    movieArray = moviesList.Search
-    console.log(movieArray)
+    var movieArray = moviesList; // was moviesList.Searched
 
     // Loop over searched movies and add them to the DOM
     for (var i = 0; i < movieArray.length; i++) {
-        console.log(movieArray[i])
-        console.log(movieArray[i].Title)
-        if (i%3 === 0) {
+        // console.log("Is this for loop in addNewSearchedMovies running?")
+        // console.log(movieArray[i])
+        // console.log(movieArray[i].Title)
+        if (i % 3 === 0) {
             $('.foundMovies').append(`<div class="row">`)
         }
         // Grab Div to store Searched Movies
@@ -361,7 +373,7 @@ function addNewSearchedMovies(moviesList){
 }
 
 
-// show YOUR Watched movies
+// function for adding WATCHED movies to the page
 
 function addWatchedMoviesToPage(watchedMovies){
   console.log("addWatchedMoviesToPage function called")
@@ -428,7 +440,7 @@ function addWatchedMoviesToPage(watchedMovies){
 }
 
 
-// show YOUR UNwatched movies
+// function to add UNWATCHED movies to the page
 
 function addUnwatchedMoviesToPage(unwatchedMovies){
   console.log("addUnwatchedMoviesToPage function called")
@@ -440,17 +452,19 @@ function addUnwatchedMoviesToPage(unwatchedMovies){
   //loop over watched movies
   // for(var i = 0; i < Object.keys(unwatchedMovies).length; i++){
   for (key in unwatchedMovies){
-    console.log("current movie", unwatchedMovies[key])
+    console.log("current movie key?", key)
     // grab div that will show Watched movies
 
-    $('#userUnwatchedMovies').append(`  <div class="col-sm-4">
+    $('#userUnwatchedMovies').append(`  <div id="${key}" class="unwatched-movie card-holder col-sm-4">
 
                                       <!--Card-->
                                       <div class="card card-cascade narrower">
 
                                       <!--Card image-->
                                       <div class="view overlay hm-white-slight">
-                                        <a class='fa fa-trash-o fa-2x'></a>
+
+                                      <a class='delete-movie-button fa fa-trash-o fa-2x'></a>
+
                                         <img src="${unwatchedMovies[key].Poster}" class="img-fluid" alt="">
                                         <a>
                                             <div class="mask"></div>
@@ -478,6 +492,14 @@ function addUnwatchedMoviesToPage(unwatchedMovies){
 
                                     </div>`)
   }
+}
+
+
+function removeMovieFromList(){
+  console.log("remove movie function called")
+
+  // Find out if movie has an unwatched or watched class
+
 }
 
 ///////////////////////////////
