@@ -399,7 +399,7 @@ function addUnwatchedMoviesToPage(unwatchedMovies){
     console.log("current movie key?", key)
     // grab div that will show Watched movies
 
-    $('#userUnwatchedMovies').append(`  <div id="${key}" class="col-sm-4">
+    $('#userUnwatchedMovies').append(`  <div id="${key}" class="card-holder col-sm-4">
 
                                       <!--Card-->
                                       <div class="card card-cascade narrower">
