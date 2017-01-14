@@ -131,6 +131,7 @@ $('#searchMovies--input-field').on('keydown', function(event){
 // when WATCHED movies tab clicked, add movies to DOM
 watchedMoviesTab.click(function(event){
   let watchedMoviePromise = new Promise(function(resolve, reject){
+    let uid = firebase.auth().currentUser.uid;
     var request = new XMLHttpRequest()
     request.addEventListener('load', function(event){
       if (event.target.status < 400) {
@@ -140,7 +141,7 @@ watchedMoviesTab.click(function(event){
       }
     });
     request.addEventListener('error', reject);
-    request.open('GET', 'https://west-philly-joel-movie-history.firebaseio.com/watchedMoviesList.json');
+    request.open('GET', `https://west-philly-joel-movie-history.firebaseio.com/${uid}/watchedMoviesList.json`);
     request.send();
   });
   watchedMoviePromise.then(function(watchedMoviesList){
@@ -226,7 +227,9 @@ $('body').on("click", '.delete-movie-button', function(event){
   var selectedMovieKey = $(selectedMovie).attr('id')
   console.log("selectedMovieKey", selectedMovieKey)
 
-  // check if selected movie is unwatched or watched
+  // check if selected movie is in unwatched list or watched list
+
+
 
   // if unwatched delete movie from unwatched database
   // if($(selectedMovie).hasClass('unwatched-movie')) {
