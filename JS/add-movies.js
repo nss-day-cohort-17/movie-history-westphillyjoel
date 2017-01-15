@@ -164,6 +164,44 @@ function addUnwatchedMoviesToPage(unwatchedMovies) {
 }
 
 ///// REMOVE movies from users list
-function removeMovieFromList() {
-  // Find out if movie has an unwatched or watched class
+function removeMovieFromList(deleteThisMovie) {
+  console.log("removeMovieFromList function called")
+
+  // Make sure the clicked target is passed to the delete function
+  console.log("deleteThisMovie", deleteThisMovie)
+
+  // store the key of the clicked movie
+  var deleteThisMovieKey = $(deleteThisMovie).attr('id')
+  console.log("deleteThisMovieKey", deleteThisMovieKey)
+
+
+  // check if selected movie is in unwatched list or watched list
+
+  // if movie is in unwatched-movie class list
+
+    // delet movie from users unwatched list on firebase
+
+  // if movie card has watched-movie class
+
+    //delete movie from users watched list on firebase
+
+
+    // the code below is what I was working on on friday
+
+  // if unwatched delete movie from unwatched database
+  // if($(selectedMovie).hasClass('unwatched-movie')) {
+  //   console.log("deleting unwatched-movie from database")
+
+  //   $.ajax({
+  //     url: 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList/.json',
+  //     type: 'DELETE',
+  //     success: function(result) {
+  //         // Do something with the result
+  //         console.log("movie deleted")
+
+  //     }
+  //   });
+
+  // }
+
 }

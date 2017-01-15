@@ -220,37 +220,10 @@ $('body').on("click", '#add-to-watched-movies-link', function(event){
 $('body').on("click", '.delete-movie-button', function(event){
   console.log("Delete button clicked - Trash can Image")
 
-  //find out if movie has unwatched or watched class
-  var selectedMovie = event.target.parentElement.parentElement.parentElement
-  console.log($(selectedMovie))
-  console.log($(selectedMovie).hasClass('unwatched-movie'))
-  var selectedMovieKey = $(selectedMovie).attr('id')
-  console.log("selectedMovieKey", selectedMovieKey)
+  // Get the selected movies div - so we can delete from the right list
+  var selectedMovieToDelete = event.target.parentElement.parentElement.parentElement
 
-  // check if selected movie is in unwatched list or watched list
-
-
-
-  // if unwatched delete movie from unwatched database
-  // if($(selectedMovie).hasClass('unwatched-movie')) {
-  //   console.log("deleting unwatched-movie from database")
-
-  //   $.ajax({
-  //     url: 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList/.json',
-  //     type: 'DELETE',
-  //     success: function(result) {
-  //         // Do something with the result
-  //         console.log("movie deleted")
-
-  //     }
-  //   });
-
-  // }
-
-
-  //find out if movie has unwatched or watched class
-
-  //removeMovieFromList()
+ removeMovieFromList(selectedMovieToDelete)
 })
 
 
