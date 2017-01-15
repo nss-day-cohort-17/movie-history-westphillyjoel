@@ -100,7 +100,6 @@ function addWatchedMoviesToPage(watchedMovies){
                                       </div>
                                         <!--/.Card-->
                                         <div id="watched-movie">
-                                        <a href="#">What do I do here?</a>
                                       </div>
 
                                     </div>`);
