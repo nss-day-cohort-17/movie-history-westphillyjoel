@@ -77,7 +77,7 @@ function addWatchedMoviesToPage(watchedMovies){
 
                                       <!--Card image-->
                                       <div class="view overlay hm-white-slight">
-                                        <a class='fa fa-trash-o fa-2x'></a>
+                                        <a class='delete-movie-button fa fa-trash-o fa-2x'></a>
                                         <img src="${watchedMovies[key].Poster}" class="img-fluid" alt="">
                                         <a>
                                             <div class="mask"></div>
