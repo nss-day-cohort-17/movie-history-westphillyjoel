@@ -70,7 +70,7 @@ function addWatchedMoviesToPage(watchedMovies){
     if (i % 3 === 0) {
       $('#userWatchedMovies').append(`<div class="row">`)
     }
-    $('#userWatchedMovies').append(`  <div class="col-sm-4">
+    $('#userWatchedMovies').append(`  <div id="${key}" class="watched-movie col-sm-4">
 
                                       <!--Card-->
                                       <div class="card card-cascade narrower">
@@ -174,14 +174,39 @@ function removeMovieFromList(deleteThisMovie) {
   var deleteThisMovieKey = $(deleteThisMovie).attr('id')
   console.log("deleteThisMovieKey", deleteThisMovieKey)
 
+  var uid = firebase.auth().currentUser.uid
+
 
   // check if selected movie is in unwatched list or watched list
 
   // if movie is in unwatched-movie class list
+  if ($(deleteThisMovie).hasClass('unwatched-movie')) {
+    $(deleteThisMovie).addClass('animated zoomOutUp')
+    $.ajax({
+      url: `https://west-philly-joel-movie-history.firebaseio.com/${uid}/unwatchedMoviesList/${deleteThisMovieKey}.json`,
+      type: 'DELETE',
+      success: function(result) {
+          alert("Movie sent to trash");
+
+      }
+   });
+  }
 
     // delet movie from users unwatched list on firebase
 
   // if movie card has watched-movie class
+  if ($(deleteThisMovie).hasClass('watched-movie')) {
+    $(deleteThisMovie).addClass('animated zoomOutUp')
+    $.ajax({
+      url: `https://west-philly-joel-movie-history.firebaseio.com/${uid}/watchedMoviesList/${deleteThisMovieKey}.json`,
+      type: 'DELETE',
+      success: function(result) {
+
+          alert("Movie sent to trash!");
+
+      }
+   });
+  }
 
     //delete movie from users watched list on firebase
 

@@ -216,7 +216,7 @@ $('body').on("click", '#add-to-watched-movies-link', function(event){
 
 })
 
-// Delete Button (trash can iamge) event listener
+// Delete Button (trash can image) event listener
 $('body').on("click", '.delete-movie-button', function(event){
   console.log("Delete button clicked - Trash can Image")
 
