@@ -121,6 +121,7 @@ $('#searchMovies--input-field').on('keydown', function(event){
 // when WATCHED movies tab clicked, add movies to DOM
 watchedMoviesTab.click(function(event){
   let watchedMoviePromise = new Promise(function(resolve, reject){
+    let uid = firebase.auth().currentUser.uid;
     var request = new XMLHttpRequest()
     request.addEventListener('load', function(event){
       if (event.target.status < 400) {
@@ -130,7 +131,7 @@ watchedMoviesTab.click(function(event){
       }
     });
     request.addEventListener('error', reject);
-    request.open('GET', 'https://west-philly-joel-movie-history.firebaseio.com/watchedMoviesList.json');
+    request.open('GET', `https://west-philly-joel-movie-history.firebaseio.com/${uid}/watchedMoviesList.json`);
     request.send();
   });
   watchedMoviePromise.then(function(watchedMoviesList){
@@ -205,39 +206,14 @@ $('body').on("click", '#add-to-watched-movies-link', function(event){
 
 })
 
-// Delete Button (trash can iamge) event listener
+// Delete Button (trash can image) event listener
 $('body').on("click", '.delete-movie-button', function(event){
   console.log("Delete button clicked - Trash can Image")
 
-  //find out if movie has unwatched or watched class
-  var selectedMovie = event.target.parentElement.parentElement.parentElement
-  console.log($(selectedMovie))
-  console.log($(selectedMovie).hasClass('unwatched-movie'))
-  var selectedMovieKey = $(selectedMovie).attr('id')
-  console.log("selectedMovieKey", selectedMovieKey)
+  // Get the selected movies div - so we can delete from the right list
+  var selectedMovieToDelete = event.target.parentElement.parentElement.parentElement
 
-  // check if selected movie is unwatched or watched
-
-  // if unwatched delete movie from unwatched database
-  // if($(selectedMovie).hasClass('unwatched-movie')) {
-  //   console.log("deleting unwatched-movie from database")
-
-  //   $.ajax({
-  //     url: 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList/.json',
-  //     type: 'DELETE',
-  //     success: function(result) {
-  //         // Do something with the result
-  //         console.log("movie deleted")
-
-  //     }
-  //   });
-
-  // }
-
-
-  //find out if movie has unwatched or watched class
-
-  //removeMovieFromList()
+ removeMovieFromList(selectedMovieToDelete)
 })
 
 
