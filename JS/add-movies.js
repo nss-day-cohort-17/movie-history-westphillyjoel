@@ -178,10 +178,33 @@ function removeMovieFromList(deleteThisMovie) {
   // check if selected movie is in unwatched list or watched list
 
   // if movie is in unwatched-movie class list
+  if ($(deleteThisMovie).hasClass('unwatched-movie')) {
+    $(deleteThisMovie).addClass('animated zoomOutUp')
+    $.ajax({
+      url: 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList/.json',
+      type: 'DELETE',
+      success: function(result) {
+          alert("Movie sent to trash");
+
+      }
+   });
+  }
 
     // delet movie from users unwatched list on firebase
 
   // if movie card has watched-movie class
+  if ($(deleteThisMovie).hasClass('watched-movie')) {
+    $(deleteThisMovie).addClass('animated zoomOutUp')
+    $.ajax({
+      url: 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList/.json',
+      type: 'DELETE',
+      success: function(result) {
+
+          alert("Movie sent to trash!");
+
+      }
+   });
+  }
 
     //delete movie from users watched list on firebase
 
