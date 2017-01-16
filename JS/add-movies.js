@@ -70,7 +70,7 @@ function addWatchedMoviesToPage(watchedMovies){
     if (i % 3 === 0) {
       $('#userWatchedMovies').append(`<div class="row">`)
     }
-    $('#userWatchedMovies').append(`  <div class="col-sm-4">
+    $('#userWatchedMovies').append(`  <div id="${key}" class="watched-movie col-sm-4">
 
                                       <!--Card-->
                                       <div class="card card-cascade narrower">
@@ -198,7 +198,7 @@ function removeMovieFromList(deleteThisMovie) {
   if ($(deleteThisMovie).hasClass('watched-movie')) {
     $(deleteThisMovie).addClass('animated zoomOutUp')
     $.ajax({
-      url: 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList/.json',
+      url: `https://west-philly-joel-movie-history.firebaseio.com/${uid}/watchedMoviesList/${deleteThisMovieKey}.json`,
       type: 'DELETE',
       success: function(result) {
 
