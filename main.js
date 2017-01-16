@@ -67,38 +67,28 @@ changeView(findNewMoviesButton, searchYourMoviesButton, loginView, newMoviesView
 // when 'find new movies' link is clicked show the search bar in new movies div
 changeView(searchYourMoviesButton, findNewMoviesButton, loginView, userMoviesView, newMoviesView)
 
+function changeTabsView(tab1, tab2, view1, div1, div2) {
+  tab1.click(function(event) {
+    event.preventDefault();
+
+    if (firebase.auth().currentUser !== null) {
+      //logged in
+      tab1.addClass('activeWatch');
+      tab2.removeClass('activeWatch');
+
+      view1.addClass("hidden");
+      div1.removeClass('hidden');
+      div2.addClass('hidden');
+    }
+  })
+}
 // when 'show watched' tab is clicked show the users watched movies and hide unwatched movies
-watchedMoviesTab.click(function(event) {
-  event.preventDefault();
-
-  if (firebase.auth().currentUser !== null) {
-    //logged in
-    watchedMoviesTab.addClass('activeWatch');
-    unwatchedMoviesTab.removeClass('activeWatch');
-
-    loginView.addClass("hidden");
-    watchedMoviesDiv.removeClass('hidden');
-    unwatchedMoviesDiv.addClass('hidden');
-  }
-})
-
+changeTabsView(watchedMoviesTab, unwatchedMoviesTab, loginView, unwatchedMoviesDiv, watchedMoviesDiv);
 // when 'show unwatched' tab is clicked show the users unwatched movies and hide users watched movies
-unwatchedMoviesTab.click(function(event) {
-  event.preventDefault();
-
-  if (firebase.auth().currentUser !== null) {
-    //logged in
-    watchedMoviesTab.removeClass('activeWatch');
-    unwatchedMoviesTab.addClass('activeWatch');
-
-    loginView.addClass("hidden");
-    watchedMoviesDiv.addClass('hidden');
-    unwatchedMoviesDiv.removeClass('hidden');
-  }
-})
+changeTabsView(unwatchedMoviesTab, watchedMoviesTab, loginView, watchedMoviesDiv, unwatchedMoviesDiv);
 
 
-// when search button clicked, getting searched movies and adding to DOM
+// when search button clicked, get SEARCHED movies and then ADD to DOM
 $('#searchMovies--button').click(function(event){
     event.preventDefault()
 
