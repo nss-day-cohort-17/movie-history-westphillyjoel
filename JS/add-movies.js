@@ -174,6 +174,8 @@ function removeMovieFromList(deleteThisMovie) {
   var deleteThisMovieKey = $(deleteThisMovie).attr('id')
   console.log("deleteThisMovieKey", deleteThisMovieKey)
 
+  var uid = firebase.auth().currentUser.uid
+
 
   // check if selected movie is in unwatched list or watched list
 
@@ -181,7 +183,7 @@ function removeMovieFromList(deleteThisMovie) {
   if ($(deleteThisMovie).hasClass('unwatched-movie')) {
     $(deleteThisMovie).addClass('animated zoomOutUp')
     $.ajax({
-      url: 'https://west-philly-joel-movie-history.firebaseio.com/unwatchedMoviesList/.json',
+      url: `https://west-philly-joel-movie-history.firebaseio.com/${uid}/unwatchedMoviesList/${deleteThisMovieKey}.json`,
       type: 'DELETE',
       success: function(result) {
           alert("Movie sent to trash");
